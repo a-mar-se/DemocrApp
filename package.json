@@ -1,0 +1,14 @@
+{
+  "name": "3servers",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  },
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "private": true
+}
