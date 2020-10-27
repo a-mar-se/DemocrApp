@@ -5,6 +5,7 @@ import {
   updatePerson,
   sendDeletePetition,
 } from '../models/db.js';
+import { createUserResource } from '../models/user.js';
 // import { useParams } from 'react-router-dom';
 import pkg from 'react-router-dom';
 const { useParams } = pkg;

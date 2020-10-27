@@ -43,6 +43,13 @@ export const createDataResource = async (data) => {
     throw new Error(error);
   }
 };
+export const createUserResource = async (data) => {
+  try {
+    return await Data.create({ ...data });
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
 export const sendDeletePetition = async (id) => {
   try {

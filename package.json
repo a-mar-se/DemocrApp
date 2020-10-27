@@ -10,5 +10,8 @@
     "server",
     "client"
   ],
-  "private": true
+  "private": true,
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  }
 }
