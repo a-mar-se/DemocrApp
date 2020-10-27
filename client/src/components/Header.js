@@ -10,10 +10,16 @@ const Header = () => {
           <a href="./index">Index</a>
         </li>
         <li>
-          <a href="./show">Show</a>
+          <a href="./users">All Users</a>
         </li>
         <li>
-          <a href="./new">New</a>
+          <a href="./newUser">New</a>
+        </li>
+        <li>
+          <a href="./login">Log in</a>
+        </li>
+        <li>
+          <a href="./profile">Profile</a>
         </li>
       </ul>
     </div>

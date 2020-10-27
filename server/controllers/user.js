@@ -27,8 +27,7 @@ export const listAllUsers = async (request, response, next) => {
 
 export const signIn = async (request, response, next) => {
   try {
-    console.log(request.body.name);
-    let user = await User.findOne({ name: request.body.name });
+    let user = await User.findOne({ email: request.body.email });
     if (!user) {
       return response.status(400).send('Incorrect email or password.');
     }
@@ -36,15 +35,16 @@ export const signIn = async (request, response, next) => {
       return response.status(400).send('Incorrect email or password.');
     }
 
-    const tokenData = {
-      name: request.body.name,
-    };
-    console.log(tokenData);
-    const token = jwt.sign({ name: request.body.name }, 'secret token', {
+    // const tokenData = {
+    //   email: request.body.email,
+    // };
+    // console.log(tokenData);
+    const token = jwt.sign({ email: request.body.email }, 'secret_token', {
       expiresIn: 60 * 60,
     });
-    response.status(200).json({
-      name: request.body.name,
+    return response.status(200).json({
+      _id: user._id,
+      email: request.body.email,
       token,
     });
   } catch (error) {
