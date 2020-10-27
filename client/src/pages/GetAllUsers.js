@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import Person from '../components/Person.js';
 
 const url = 'http://localhost:5000/all';
-class ShowAll extends React.Component {
+class GetAllUsers extends React.Component {
   // Get resources
 
   state = {
     data: [],
   };
   async componentDidMount() {
-    const res = await fetch(`/all`);
+    const res = await fetch(`/users`);
     const data = await res.json();
     this.setState({ data });
   }
@@ -18,11 +18,18 @@ class ShowAll extends React.Component {
     return (
       <main className="page">
         {this.state.data.map((person, i) => {
-          return <Person name={person.name} surname={person.surname} key={i} />;
+          return (
+            <Person
+              name={person.name}
+              password={person.password}
+              key={i}
+              id={person._id}
+            />
+          );
         })}
       </main>
     );
   }
 }
 
-export default ShowAll;
+export default GetAllUsers;

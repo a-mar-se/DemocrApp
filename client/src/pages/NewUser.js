@@ -1,26 +1,33 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const New = () => {
+const NewUser = () => {
   const [newName, setNewName] = useState('');
-  const [newSurname, setNewSurname] = useState('');
+  const [newPassword, setNewSurname] = useState('');
+  const [newEmail, setNewEmail] = useState('');
 
   const handleChangeName = (event) => {
     const { value } = event.currentTarget;
     setNewName(value);
   };
-  const handleChangeSurname = (event) => {
+  const handleChangePass = (event) => {
     const { value } = event.currentTarget;
     setNewSurname(value);
+  };
+  const handleChangeEmail = (event) => {
+    const { value } = event.currentTarget;
+    setNewEmail(value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // console.log(newData);
-    const res = await fetch(`/`, {
+    const res = await fetch(`/newUser`, {
       method: 'POST',
-      body: JSON.stringify({ name: newName, surname: newSurname }),
+      body: JSON.stringify({
+        name: newName,
+        password: newPassword,
+        email: newEmail,
+      }),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -44,13 +51,23 @@ const New = () => {
           />
         </p>
         <p>
-          <label htmlFor="surname">Surname</label>
+          <label htmlFor="pass">Password</label>
           <input
-            id="surname"
-            placeholder="Enter surname..."
+            id="pass"
+            placeholder="Enter password..."
             type="text"
             required
-            onChange={handleChangeSurname}
+            onChange={handleChangePass}
+          />
+        </p>
+        <p>
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            placeholder="Enter email..."
+            type="text"
+            required
+            onChange={handleChangeEmail}
           />
         </p>
         <button type="submit">Add person to database</button>
@@ -59,4 +76,4 @@ const New = () => {
   );
 };
 
-export default New;
+export default NewUser;
