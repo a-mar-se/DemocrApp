@@ -4,7 +4,7 @@ import {
   updatePerson,
 } from '../models/user.js';
 import jwt from 'jsonwebtoken';
-import { User, sendDeletePetition } from '../models/user.js';
+import { User, sendDeletePetition, getUserById } from '../models/user.js';
 import logger from '../lib/logger.js';
 
 export const createNewUser = async (request, response) => {
@@ -39,14 +39,20 @@ export const signIn = async (request, response, next) => {
     if (request.body.password != user.password) {
       return response.status(400).send('Incorrect email or password.');
     }
-    const token = jwt.sign({ email: request.body.email }, 'token', {
+    const token = jwt.sign({ email: request.body.email }, 'Token', {
       expiresIn: 60 * 60,
     });
-    return response.status(200).json({
+    // response.setHeader('authorization');
+    // return response.status(200).send(token);
+
+    response.setHeader('Token', token);
+    response.status(200).json({
       _id: user._id,
-      email: request.body.email,
+      email: user.email,
       token,
     });
+    logger.info(response.Token);
+    return response;
   } catch (error) {
     return response.status(500).send({
       message: `The database can´t be access. Error: ${error}`,
@@ -115,5 +121,19 @@ export const deletePerson = async (request, response, next) => {
     }
   } catch (err) {
     return response.send('error');
+  }
+};
+
+export const listPerson = async (request, response, next) => {
+  const {
+    params: { id },
+  } = request;
+  const dataResource = await getUserById(id);
+  if (dataResource) {
+    return response.status(200).send(dataResource);
+  } else {
+    return response.status(404).send({
+      message: 'Error: Profile not found.',
+    });
   }
 };

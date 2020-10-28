@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ClickablePerson from '../components/ClickablePerson.js';
 
-const url = 'http://localhost:5000/all';
 class Index extends React.Component {
   // Get resources
 

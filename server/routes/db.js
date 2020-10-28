@@ -1,5 +1,5 @@
 import express from 'express';
-import { listData, createData, listPerson } from '../controllers/db.js';
+import { listData, createData } from '../controllers/db.js';
 import authorize from '../middleware/auth.js';
 import {
   listAllUsers,
@@ -8,6 +8,7 @@ import {
   editPerson,
   editPerson2,
   deletePerson,
+  listPerson,
 } from '../controllers/user.js';
 import db from '../models/db.js';
 
@@ -18,8 +19,8 @@ dbRouter.get('/users', listAllUsers);
 dbRouter.post('/login', signIn);
 dbRouter.get('/all', listData);
 dbRouter.get('/:id', listPerson);
-dbRouter.put('/:id', authorize, editPerson2);
-dbRouter.delete('/:id', authorize, deletePerson);
+dbRouter.put('/edit/:id', authorize, editPerson2);
+dbRouter.delete('/delete/:id', authorize, deletePerson);
 dbRouter.post('/', createData);
 
 export default dbRouter;

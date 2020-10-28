@@ -1,28 +1,31 @@
 import React from 'react';
-const Header = () => {
-  return (
-    <div>
-      <ul id="nav">
-        <li>
-          <a href="./">Home</a>
-        </li>
-        <li>
-          <a href="./index">Index</a>
-        </li>
-        <li>
-          <a href="./users">All Users</a>
-        </li>
-        <li>
-          <a href="./newUser">New</a>
-        </li>
-        <li>
-          <a href="./login">Log in</a>
-        </li>
-        <li>
-          <a href="./profile">Profile</a>
-        </li>
-      </ul>
-    </div>
-  );
-};
+import { Link } from 'react-router-dom';
+
+class Header extends React.Component {
+  render() {
+    return (
+      <div>
+        <ul id="nav">
+          <li>
+            <Link className="hidden" to="/">
+              Home
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/users">All Users</Link>
+          </li>
+
+          <li>
+            {this.props.token != '' ? (
+              <Link to="/profile">Profile</Link>
+            ) : (
+              <Link to="/newUser">Sign Up</Link>
+            )}
+          </li>
+        </ul>
+      </div>
+    );
+  }
+}
 export default Header;

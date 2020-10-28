@@ -52,3 +52,11 @@ export const sendDeletePetition = async (id) => {
     throw new Error(error);
   }
 };
+
+export const getUserById = async (id) => {
+  try {
+    return await User.findById(id);
+  } catch (error) {
+    throw new Error(error);
+  }
+};

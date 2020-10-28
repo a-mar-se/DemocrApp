@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Person from '../components/Person.js';
 
-const url = 'http://localhost:5000/all';
+// const url = 'http://localhost:5000/all';
 class GetAllUsers extends React.Component {
   // Get resources
 
