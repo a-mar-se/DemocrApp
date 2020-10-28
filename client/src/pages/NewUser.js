@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 const NewUser = () => {
   const [newName, setNewName] = useState('');
@@ -21,7 +20,7 @@ const NewUser = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const res = await fetch(`/newUser`, {
+    await fetch(`/newUser`, {
       method: 'POST',
       body: JSON.stringify({
         name: newName,
@@ -34,7 +33,7 @@ const NewUser = () => {
     });
 
     console.log('New person added!');
-    window.location.href = `/index`;
+    window.location.href = `/users`;
   };
 
   return (

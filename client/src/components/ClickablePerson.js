@@ -5,7 +5,7 @@ class ClickablePerson extends React.Component {
   render() {
     return (
       <div className="person-details">
-        <Link to={`/id${this.props.id}`}>
+        <Link to={`/user/${this.props.id}`}>
           {this.props.name} {this.props.surname}
         </Link>
       </div>

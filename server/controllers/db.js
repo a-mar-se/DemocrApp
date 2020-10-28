@@ -21,20 +21,6 @@ export const listData = async (request, response, next) => {
   }
 };
 
-export const listPerson = async (request, response, next) => {
-  const {
-    params: { id },
-  } = request;
-  const dataResource = await getDataById(id);
-  if (dataResource) {
-    return response.status(200).send(dataResource);
-  } else {
-    return response.status(404).send({
-      message: 'Error: Profile not found.',
-    });
-  }
-};
-
 export const editPerson = async (request, response, next) => {
   const {
     params: { id },

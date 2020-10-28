@@ -15,18 +15,18 @@ const ShowProfile = () => {
   };
 
   const deleteThisUser = async (id) => {
-    await fetch(`/${id}`, {
+    await fetch(`/delete/${id}`, {
       method: 'DELETE',
       // body: JSON.stringify({ id }),
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    window.location.href = '/index';
+    window.location.href = '/users';
   };
 
   const sendToEditPage = async (id) => {
-    window.location.href = `/edit${id}`;
+    window.location.href = `/edit/${id}`;
   };
 
   useEffect(() => {
@@ -42,7 +42,6 @@ const ShowProfile = () => {
         onClick={() => {
           deleteThisUser(person._id);
         }}
-        href="/"
       >
         Delete user
       </button>

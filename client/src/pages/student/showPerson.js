@@ -15,14 +15,15 @@ const ShowPerson = () => {
   };
 
   const deleteThisUser = async (id) => {
-    await fetch(`/${id}`, {
+    const res = await fetch(`/delete/${id}`, {
       method: 'DELETE',
       // body: JSON.stringify({ id }),
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    window.location.href = '/index';
+    console.log(res);
+    window.location.href = '/users';
   };
 
   const sendToEditPage = async (id) => {
@@ -36,13 +37,13 @@ const ShowPerson = () => {
   return (
     <main className="page show">
       <h2>{person.name}</h2>
-      <h3> {person.surname}</h3>
+      <h4> {person.password}</h4>
+      <h3> {person.email}</h3>
       <div>Id: {person._id}</div>
       <button
         onClick={() => {
           deleteThisUser(person._id);
         }}
-        href="/"
       >
         Delete user
       </button>

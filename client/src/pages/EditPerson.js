@@ -13,40 +13,37 @@ const Edit = () => {
     // console.log({ person });
   };
 
-  useEffect(async () => {
-    await fetchStudent(id);
-    setNewName(person.name);
-    setNewSurname(person.surname);
-    console.log(person.name);
-  }, [id]);
-
   const [newName, setNewName] = useState('');
-  const [newSurname, setNewSurname] = useState('');
+  const [newEmail, setNewEmail] = useState('');
+
+  useEffect(() => {
+    fetchStudent(id);
+  }, [id]);
 
   const handleChangeName = (event) => {
     const { value } = event.currentTarget;
     setNewName(value);
   };
 
-  const handleChangeSurname = (event) => {
+  const handleChangeEmail = (event) => {
     const { value } = event.currentTarget;
-    setNewSurname(value);
+    setNewEmail(value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     // console.log(newData);
-    const res = await fetch(`/${person._id}`, {
+    await fetch(`/${person._id}`, {
       method: 'PUT',
-      body: JSON.stringify({ name: newName, surname: newSurname }),
+      body: JSON.stringify({ name: newName, email: newEmail }),
       headers: {
         'Content-Type': 'application/json',
       },
     });
 
     console.log('Profile sucessfully edited!');
-    window.location.href = `/index`;
+    window.location.href = `/users`;
   };
 
   return (
@@ -64,14 +61,14 @@ const Edit = () => {
           />
         </p>
         <p>
-          <label htmlFor="surname">Surname</label>
+          <label htmlFor="email">Email</label>
           <input
-            // value={newSurname}
-            id="surname"
-            placeholder="Enter surname"
+            // value={newemail}
+            id="email"
+            placeholder="Enter email"
             type="text"
             required
-            onChange={handleChangeSurname}
+            onChange={handleChangeEmail}
           />
         </p>
         <button type="submit">Confirm changes</button>
