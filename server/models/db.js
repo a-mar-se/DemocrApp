@@ -30,7 +30,10 @@ export const getDataById = async (id) => {
 
 export const updatePerson = async (id, newData) => {
   try {
-    return await Data.findByIdAndUpdate(id, { ...newData });
+    console.log(id);
+    // return await Data.findByIdAndUpdate(id, { ...newData });
+
+    return await User.findById(id);
   } catch (error) {
     throw new Error(error);
   }

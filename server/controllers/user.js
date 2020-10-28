@@ -1,6 +1,11 @@
-import { getAllUsers, createUserResource } from '../models/user.js';
+import {
+  getAllUsers,
+  createUserResource,
+  updatePerson,
+} from '../models/user.js';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/user.js';
+import { User, sendDeletePetition } from '../models/user.js';
+import logger from '../lib/logger.js';
 
 export const createNewUser = async (request, response) => {
   const { body } = request;
@@ -34,12 +39,7 @@ export const signIn = async (request, response, next) => {
     if (request.body.password != user.password) {
       return response.status(400).send('Incorrect email or password.');
     }
-
-    // const tokenData = {
-    //   email: request.body.email,
-    // };
-    // console.log(tokenData);
-    const token = jwt.sign({ email: request.body.email }, 'secret_token', {
+    const token = jwt.sign({ email: request.body.email }, 'token', {
       expiresIn: 60 * 60,
     });
     return response.status(200).json({
@@ -51,5 +51,69 @@ export const signIn = async (request, response, next) => {
     return response.status(500).send({
       message: `The database can´t be access. Error: ${error}`,
     });
+  }
+};
+
+export const editPerson = async (request, response, next) => {
+  const {
+    params: { id },
+    body,
+  } = request;
+  const dataResource = await updatePerson(id, body);
+  if (dataResource) {
+    return response.status(200).send(dataResource);
+  } else {
+    return response.status(404).send({
+      message: 'Error: Profile not found.',
+    });
+  }
+};
+
+export const editPerson2 = async (request, response, next) => {
+  const {
+    params: { id },
+    body,
+  } = request;
+  const token = request.headers.token;
+  logger.info(request.headers.token);
+
+  try {
+    const data = jwt.verify(token, 'token');
+    logger.info(data);
+
+    const dataResource = await updatePerson(id, body);
+    if (dataResource) {
+      return response.status(200).send(dataResource);
+    } else {
+      return response.status(404).send({
+        message: 'Error: Profile not found or not logged in.',
+      });
+    }
+  } catch (err) {
+    return response.send('error');
+  }
+};
+
+export const deletePerson = async (request, response, next) => {
+  const {
+    params: { id },
+  } = request;
+  const token = request.headers.token;
+  logger.info(request.headers.token);
+
+  try {
+    const data = jwt.verify(token, 'token');
+    logger.info(id);
+
+    const dataResource = await sendDeletePetition(id);
+    if (dataResource) {
+      return response.status(200).send(dataResource);
+    } else {
+      return response.status(404).send({
+        message: 'Error: Profile not found.',
+      });
+    }
+  } catch (err) {
+    return response.send('error');
   }
 };

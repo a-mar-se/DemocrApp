@@ -1,3 +1,4 @@
+// import { response } from 'express';
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
@@ -27,6 +28,26 @@ export const createUserResource = async (data) => {
 export const getAllUsers = async () => {
   try {
     return await User.find();
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const updatePerson = async (id, newData) => {
+  try {
+    console.log(id);
+
+    await User.findByIdAndUpdate(id, { ...newData });
+    return User.findById(id);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const sendDeletePetition = async (id) => {
+  try {
+    await User.findByIdAndDelete(id);
+    return 'user deleted';
   } catch (error) {
     throw new Error(error);
   }
