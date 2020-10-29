@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { browserHistory } from 'react-router';
 
-const Edit = () => {
+const EditUser = ({ token, email }) => {
   const { id } = useParams();
 
   const [person, setPerson] = useState({});
@@ -15,6 +16,7 @@ const Edit = () => {
 
   const [newName, setNewName] = useState('');
   const [newEmail, setNewEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
 
   useEffect(() => {
     fetchStudent(id);
@@ -25,6 +27,11 @@ const Edit = () => {
     setNewName(value);
   };
 
+  const handleChangePassword = (event) => {
+    const { value } = event.currentTarget;
+    setNewPassword(value);
+  };
+
   const handleChangeEmail = (event) => {
     const { value } = event.currentTarget;
     setNewEmail(value);
@@ -32,18 +39,27 @@ const Edit = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // console.log(newData);
-    await fetch(`/${person._id}`, {
+    const response = await fetch(`/edit/${person._id}`, {
       method: 'PUT',
-      body: JSON.stringify({ name: newName, email: newEmail }),
+      body: JSON.stringify({
+        name: newName,
+        email: newEmail,
+        password: newPassword,
+      }),
       headers: {
         'Content-Type': 'application/json',
+        email: email,
+        token: token,
       },
     });
+    if (response.status == 200) {
+      alert('Profile sucessfully edited! /n Log in again please');
+      console.log('Profile sucessfully edited!');
 
-    console.log('Profile sucessfully edited!');
-    window.location.href = `/users`;
+      window.location.href = '/users';
+    } else {
+      console.log('Error trying to edit the profile.');
+    }
   };
 
   return (
@@ -71,10 +87,21 @@ const Edit = () => {
             onChange={handleChangeEmail}
           />
         </p>
+        <p>
+          <label htmlFor="pass">Password</label>
+          <input
+            // value={newemail}
+            id="pass"
+            placeholder="Enter password"
+            type="text"
+            required
+            onChange={handleChangePassword}
+          />
+        </p>
         <button type="submit">Confirm changes</button>
       </form>
     </main>
   );
 };
 
-export default Edit;
+export default EditUser;

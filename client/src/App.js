@@ -6,17 +6,25 @@ import NewUser from './pages/NewUser.js';
 import Footer from './components/Footer.js';
 import Header from './components/Header.js';
 import ShowPerson from './pages/student/showPerson.js';
-import Edit from './pages/EditPerson.js';
+import EditUser from './pages/EditUser.js';
 import Error from './pages/Error.js';
 import GetAllUsers from './pages/GetAllUsers.js';
 import ShowProfile from './pages/ShowProfile.js';
 import LogInfo from './components/LogInfo.js';
+import Dum from './components/Dum.js';
+import LogIn from './components/LogIn';
 
 const App = () => {
   const [token, setToken] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [newEmail, setNewEmail] = useState('');
+  const [email, setEmail] = useState('');
   const [newName, setNewName] = useState('');
+  const [id, setNewId] = useState('');
+  const [dum, setNewdum] = useState('');
+
+  const changePropsVar = (newDum) => {
+    setNewdum(newDum);
+  };
 
   const handleChangePass = (event) => {
     const { value } = event.currentTarget;
@@ -24,85 +32,59 @@ const App = () => {
   };
   const handleChangeEmail = (event) => {
     const { value } = event.currentTarget;
-    setNewEmail(value);
+    setEmail(value);
   };
   const handleChangeName = (event) => {
     const { value } = event.currentTarget;
     setNewName(value);
   };
 
-  const handleLogIn = async (event) => {
-    event.preventDefault();
-    const res = await fetch(`/login`, {
-      method: 'POST',
-      body: JSON.stringify({
-        password: newPassword,
-        email: newEmail,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if (res.status === 200) {
-      const data = await res.json();
-      console.log(data);
-      const newToken = data.token;
-      console.log(`Logged in with email: ${newEmail}`);
-      console.log(`Logged in with token: ${token}`);
-      setToken(newToken);
-      console.log(token);
-    } else {
-      alert('Incorrect email or password');
-    }
+  const logOut = async (event) => {
+    console.log('User has logged out!');
+    setToken('');
+    setNewId('');
+  };
+
+  const handleLogIn = async (ttoken, idd, emaill) => {
+    setToken(ttoken);
+    setNewId(idd);
+    setEmail(emaill);
   };
 
   return (
     <>
       <div>
         <BrowserRouter>
-          <Header token={token} />
-          <form onSubmit={handleLogIn}>
-            <p>
-              <label htmlFor="pass">Password</label>
-              <input
-                id="pass"
-                placeholder="Enter password..."
-                type="text"
-                required
-                onChange={handleChangePass}
-              />
-            </p>
-            <p>
-              <label htmlFor="email">Email</label>
-              <input
-                id="email"
-                placeholder="Enter email..."
-                type="text"
-                required
-                onChange={handleChangeEmail}
-              />
-            </p>
-            <button type="submit">Log In</button>
-          </form>
-
-          <Link to="/newUser">
-            <button>Sign Up</button>
-          </Link>
-          <LogInfo token={token} email={newEmail} />
-
+          <Header token={token} id={id} />
+          {token !== '' ? (
+            <Link to="/">
+              <button onClick={logOut}>Log Out</button>
+            </Link>
+          ) : (
+            <LogIn handleLogIn={handleLogIn} />
+          )}
+          {token === '' ? (
+            <Link to="/newUser">
+              <button>Sign Up</button>
+            </Link>
+          ) : null}
+          <LogInfo token={token} email={email} />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/users" component={GetAllUsers} />
-
             <Route path="/newUser" component={NewUser} />
             <Route
               path="/user/:id"
-              render={() => (
-                <ShowPerson token={token} changeToken={handleLogIn} />
-              )}
+              render={() => <ShowPerson token={token} />}
             />
-            <Route path="/profile:id" component={ShowProfile} />
-            <Route path="/edit:id" component={Edit} />
+            <Route
+              path="/profile/:id"
+              render={() => <ShowProfile token={token} email={email} />}
+            />
+            <Route
+              path="/edit/:id"
+              render={() => <EditUser token={token} email={email} />}
+            />
             <Route path="/*" component={Error} />
           </Switch>
         </BrowserRouter>

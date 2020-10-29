@@ -17,8 +17,8 @@ class Header extends React.Component {
           </li>
 
           <li>
-            {this.props.token != '' ? (
-              <Link to="/profile">Profile</Link>
+            {this.props.token !== '' ? (
+              <Link to={`/profile/${this.props.id}`}>Profile</Link>
             ) : (
               <Link to="/newUser">Sign Up</Link>
             )}

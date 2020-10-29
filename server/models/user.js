@@ -38,7 +38,9 @@ export const updatePerson = async (id, newData) => {
     console.log(id);
 
     await User.findByIdAndUpdate(id, { ...newData });
-    return User.findById(id);
+    const updatedUser = await User.findById(id);
+    console.log(updatedUser);
+    return updatedUser;
   } catch (error) {
     throw new Error(error);
   }
@@ -46,10 +48,15 @@ export const updatePerson = async (id, newData) => {
 
 export const sendDeletePetition = async (id) => {
   try {
-    await User.findByIdAndDelete(id);
-    return 'user deleted';
+    const returnVal = await User.findByIdAndDelete(id);
+    if (returnVal) {
+      return 'user deleted';
+    } else {
+      return 'user doesn´t exist';
+    }
   } catch (error) {
     throw new Error(error);
+    // return 'kifj';
   }
 };
 
