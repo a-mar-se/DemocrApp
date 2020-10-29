@@ -17,6 +17,9 @@ class Header extends React.Component {
           </li>
 
           <li>
+            <Link to="/wall">All Polls</Link>
+          </li>
+          <li>
             {this.props.token !== '' ? (
               <Link to={`/profile/${this.props.id}`}>Profile</Link>
             ) : (

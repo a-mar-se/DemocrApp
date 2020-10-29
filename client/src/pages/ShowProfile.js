@@ -7,7 +7,7 @@ const ShowProfile = ({ token, email }) => {
   const [person, setPerson] = useState({});
 
   const fetchStudent = async (id) => {
-    const response = await fetch(`/${id}`);
+    const response = await fetch(`/user/${id}`);
     const personData = await response.json();
     console.log(personData);
     // const studentData = await getStudent(id);

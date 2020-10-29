@@ -7,7 +7,7 @@ const EditUser = ({ token, email }) => {
   const [person, setPerson] = useState({});
 
   const fetchStudent = async (id) => {
-    const response = await fetch(`/${id}`);
+    const response = await fetch(`/user/${id}`);
     const personData = await response.json();
     setPerson(personData);
     // console.log({ person });

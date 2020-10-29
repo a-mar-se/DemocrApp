@@ -11,7 +11,8 @@ import Error from './pages/Error.js';
 import GetAllUsers from './pages/GetAllUsers.js';
 import ShowProfile from './pages/ShowProfile.js';
 import LogInfo from './components/LogInfo.js';
-import LogIn from './components/LogIn';
+import LogIn from './components/LogIn.js';
+import Wall from './pages/Wall.js';
 
 const App = () => {
   const [token, setToken] = useState('');
@@ -71,6 +72,7 @@ const App = () => {
               path="/edit/:id"
               render={() => <EditUser token={token} email={email} />}
             />
+            <Route path="/wall" render={() => <Wall />} />
             <Route path="/*" component={Error} />
           </Switch>
         </BrowserRouter>

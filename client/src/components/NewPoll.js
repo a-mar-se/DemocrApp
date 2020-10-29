@@ -25,9 +25,8 @@ const NewPoll = ({ name, token }) => {
   };
 
   return (
-    // <div>dfisk</div>
     <div>
-      {token === '' ? (
+      {token !== '' ? (
         <form className="new-poll" onSubmit={() => postNewPoll(content)}>
           <label htmlFor="name">Write a new proposition:</label>
           <input
@@ -38,7 +37,7 @@ const NewPoll = ({ name, token }) => {
             onChange={handleChangePollContent}
           />
 
-          <button type="submit">Log In</button>
+          <button type="submit">Post new Poll</button>
         </form>
       ) : (
         <></>

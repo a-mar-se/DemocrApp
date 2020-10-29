@@ -29,16 +29,6 @@ const LogIn = ({ handleLogIn }) => {
   return (
     <form onSubmit={tryLogInFF}>
       <p>
-        <label htmlFor="pass">Password</label>
-        <input
-          id="pass"
-          placeholder="Enter password..."
-          type="text"
-          required
-          onChange={handleChangePass}
-        />
-      </p>
-      <p>
         <label htmlFor="email">Email</label>
         <input
           id="email"
@@ -46,6 +36,16 @@ const LogIn = ({ handleLogIn }) => {
           type="text"
           required
           onChange={handleChangeEmail}
+        />
+      </p>
+      <p>
+        <label htmlFor="pass">Password</label>
+        <input
+          id="pass"
+          placeholder="Enter password..."
+          type="text"
+          required
+          onChange={handleChangePass}
         />
       </p>
       <button type="submit">Log In</button>
