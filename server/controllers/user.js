@@ -34,25 +34,26 @@ export const signIn = async (request, response, next) => {
   try {
     let user = await User.findOne({ email: request.body.email });
     if (!user) {
-      return response.status(400).send('Incorrect email or password.');
+      return response.status(410).send('Incorrect email. ');
     }
     if (request.body.password != user.password) {
-      return response.status(400).send('Incorrect email or password.');
-    }
-    const token = jwt.sign({ email: request.body.email }, 'Token', {
-      expiresIn: 60 * 60,
-    });
-    // response.setHeader('authorization');
-    // return response.status(200).send(token);
+      return response.status(420).send('Incorrect email or password.');
+    } else {
+      const token = jwt.sign({ email: request.body.email }, 'Token', {
+        expiresIn: 60 * 60,
+      });
+      // response.setHeader('authorization');
+      // return response.status(200).send(token);
 
-    response.setHeader('Token', token);
-    response.status(200).json({
-      _id: user._id,
-      email: user.email,
-      token,
-    });
-    logger.info(response.Token);
-    return response;
+      response.setHeader('Token', token);
+      response.status(200).json({
+        _id: user._id,
+        email: user.email,
+        token,
+      });
+      logger.info(response.Token);
+      return response;
+    }
   } catch (error) {
     return response.status(500).send({
       message: `The database can´t be access. Error: ${error}`,
@@ -84,19 +85,13 @@ export const editPerson2 = async (request, response, next) => {
   logger.info(request.headers.token);
 
   try {
-    const data = jwt.verify(token, 'token');
-    logger.info(data);
-
     const dataResource = await updatePerson(id, body);
-    if (dataResource) {
-      return response.status(200).send(dataResource);
-    } else {
-      return response.status(404).send({
-        message: 'Error: Profile not found or not logged in.',
-      });
-    }
+
+    return response.status(200).send(dataResource);
   } catch (err) {
-    return response.send('error');
+    return response
+      .status(408)
+      .send('Error: Profile not found or not logged in. Cannot be edited');
   }
 };
 
@@ -104,23 +99,23 @@ export const deletePerson = async (request, response, next) => {
   const {
     params: { id },
   } = request;
-  const token = request.headers.token;
-  logger.info(request.headers.token);
+  // logger.info(request.headers.token);
 
   try {
-    const data = jwt.verify(token, 'token');
-    logger.info(id);
+    // const token = await request.headers.token;
+    // const data = jwt.verify(token, 'token');
+    // logger.info(id);
 
     const dataResource = await sendDeletePetition(id);
     if (dataResource) {
-      return response.status(200).send(dataResource);
+      return await response.status(200).send(dataResource);
     } else {
-      return response.status(404).send({
+      return await response.status(404).send({
         message: 'Error: Profile not found.',
       });
     }
   } catch (err) {
-    return response.send('error');
+    return await response.send(err);
   }
 };
 

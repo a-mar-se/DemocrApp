@@ -1,20 +1,23 @@
 import jwt from 'jsonwebtoken';
 import logger from '../lib/logger.js';
 
-const authorize = (req, res, next) => {
+const authorize = async (req, res, next) => {
   try {
-    const token = req.headers.token;
-    // console.log(token);
-    if (token) {
+    const email = await req.headers.email;
+    const token = await req.headers.token;
+    const decoded = jwt.verify(token, 'Token');
+    console.log(decoded.email); // bar
+    console.log(token);
+    if (decoded.email === email) {
       // res.send(token);
       next();
+    } else {
+      return res.status(401).send(`Not authorized for this request!`);
     }
     // logger.info(req.headers.token);
     // return token;
   } catch {
-    res.status(401).json({
-      error: new Error('Invalid request!'),
-    });
+    return res.status(461).send(`Problem verifying token`);
   }
 };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
-const ShowProfile = () => {
+const ShowProfile = ({ token, email }) => {
   const { id } = useParams();
 
   const [person, setPerson] = useState({});
@@ -17,16 +17,16 @@ const ShowProfile = () => {
   const deleteThisUser = async (id) => {
     await fetch(`/delete/${id}`, {
       method: 'DELETE',
-      // body: JSON.stringify({ id }),
+      body: JSON.stringify({ id }),
       headers: {
         'Content-Type': 'application/json',
+        token: token,
+        email: email,
       },
     });
-    window.location.href = '/users';
-  };
-
-  const sendToEditPage = async (id) => {
-    window.location.href = `/edit/${id}`;
+    window.confirm('Are you sure you want to delete your user?');
+    console.log('Profile sucessfully deleted :(');
+    window.location.href('/');
   };
 
   useEffect(() => {
@@ -35,23 +35,29 @@ const ShowProfile = () => {
 
   return (
     <main className="page show">
+      {/* dsjifsdpfds
+      {person.id} */}
       <h2>{person.name}</h2>
       <h3> {person.surname}</h3>
       <div>Id: {person._id}</div>
-      <button
-        onClick={() => {
-          deleteThisUser(person._id);
-        }}
-      >
-        Delete user
-      </button>
-      <button
-        onClick={() => {
-          sendToEditPage(person._id);
-        }}
-      >
-        Edit user
-      </button>
+      <div>Access Token: {token}</div>
+      {token != '' ? (
+        <>
+          <button
+            onClick={() => {
+              deleteThisUser(person._id);
+            }}
+          >
+            Delete user
+          </button>
+
+          <Link to={`/edit/${id}`}>
+            <button>Edit user</button>
+          </Link>
+        </>
+      ) : (
+        <></>
+      )}
     </main>
   );
 };
