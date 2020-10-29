@@ -11,38 +11,20 @@ import Error from './pages/Error.js';
 import GetAllUsers from './pages/GetAllUsers.js';
 import ShowProfile from './pages/ShowProfile.js';
 import LogInfo from './components/LogInfo.js';
-import Dum from './components/Dum.js';
 import LogIn from './components/LogIn';
 
 const App = () => {
   const [token, setToken] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  // const [newPassword, setNewPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [newName, setNewName] = useState('');
+  const [name, setNewName] = useState('');
   const [id, setNewId] = useState('');
-  const [dum, setNewdum] = useState('');
-
-  const changePropsVar = (newDum) => {
-    setNewdum(newDum);
-  };
-
-  const handleChangePass = (event) => {
-    const { value } = event.currentTarget;
-    setNewPassword(value);
-  };
-  const handleChangeEmail = (event) => {
-    const { value } = event.currentTarget;
-    setEmail(value);
-  };
-  const handleChangeName = (event) => {
-    const { value } = event.currentTarget;
-    setNewName(value);
-  };
 
   const logOut = async (event) => {
     console.log('User has logged out!');
     setToken('');
     setNewId('');
+    setNewName('');
   };
 
   const handleLogIn = async (ttoken, idd, emaill) => {
@@ -70,7 +52,11 @@ const App = () => {
           ) : null}
           <LogInfo token={token} email={email} />
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route
+              exact
+              path="/"
+              render={() => <Home name={name} token={token} />}
+            />
             <Route path="/users" component={GetAllUsers} />
             <Route path="/newUser" component={NewUser} />
             <Route

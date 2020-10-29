@@ -41,7 +41,7 @@ const ShowProfile = ({ token, email }) => {
       <h3> {person.surname}</h3>
       <div>Id: {person._id}</div>
       <div>Access Token: {token}</div>
-      {token != '' ? (
+      {token !== '' ? (
         <>
           <button
             onClick={() => {

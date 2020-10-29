@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import ClickablePerson from './ClickablePerson';
 import tryLogIn from '../functions/tryLogIn.js';
 
 const LogIn = ({ handleLogIn }) => {
-  const [token, setToken] = useState('');
+  // const [token, setToken] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newEmail, setNewEmail] = useState('');
 
@@ -26,32 +25,6 @@ const LogIn = ({ handleLogIn }) => {
       handleLogIn(ttoken, iid, eemail);
     }
   };
-
-  // const tryLogIn = async (event) => {
-  //   event.preventDefault();
-  //   const res = await fetch(`/login`, {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       password: newPassword,
-  //       email: newEmail,
-  //     }),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   });
-  //   if (res.status === 200) {
-  //     const data = await res.json();
-  //     console.log(data);
-  //     const newToken = data.token;
-  //     const newId = data._id;
-  //     console.log(`Logged in with email: ${newEmail}`);
-  //     console.log(`Logged in with token: ${token}`);
-
-  //     handleLogInGood(newToken, newId, newEmail);
-  //   } else {
-  //     alert('Incorrect email or password');
-  //   }
-  // };
 
   return (
     <form onSubmit={tryLogInFF}>

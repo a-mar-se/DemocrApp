@@ -1,8 +1,11 @@
 import React from 'react';
+import NewPoll from '../components/NewPoll.js';
 
-const Home = () => {
+const Home = ({ name, token }) => {
   return (
-    <main className="page home">TIYIYYYYYYYYYYYYIIIIIIIIIIIIIIIIIIAH!</main>
+    <main className="page home">
+      <NewPoll name={name} token={token} />
+    </main>
   );
 };
 
