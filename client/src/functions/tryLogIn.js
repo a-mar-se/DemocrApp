@@ -14,9 +14,10 @@ export const tryLogIn = async (newEmail, newPassword) => {
     console.log(data);
     const newToken = data.token;
     const newId = data._id;
+    const newName = data.name;
     console.log(`Logged in with email: ${newEmail}`);
     console.log(`Logged in with token: ${newToken}`);
-    return { newToken, newId, newEmail };
+    return { newToken, newId, newEmail, newName };
     // handleLogInGood(newToken, newId, newEmail);
   } else {
     alert('Incorrect email or password');

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import ClickablePerson from './ClickablePerson';
 import tryLogIn from '../functions/tryLogIn.js';
 
 const LogIn = ({ handleLogIn }) => {
-  const [token, setToken] = useState('');
+  // const [token, setToken] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newEmail, setNewEmail] = useState('');
 
@@ -19,44 +18,28 @@ const LogIn = ({ handleLogIn }) => {
   const tryLogInFF = async (event) => {
     event.preventDefault();
     const validateLog = await tryLogIn(newEmail, newPassword);
+    console.log(validateLog);
     if (validateLog != null) {
       const ttoken = validateLog.newToken;
       const eemail = validateLog.newEmail;
       const iid = validateLog.newId;
-      handleLogIn(ttoken, iid, eemail);
+      const namee = validateLog.newName;
+      handleLogIn(ttoken, iid, eemail, namee);
     }
   };
-
-  // const tryLogIn = async (event) => {
-  //   event.preventDefault();
-  //   const res = await fetch(`/login`, {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       password: newPassword,
-  //       email: newEmail,
-  //     }),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   });
-  //   if (res.status === 200) {
-  //     const data = await res.json();
-  //     console.log(data);
-  //     const newToken = data.token;
-  //     const newId = data._id;
-  //     console.log(`Logged in with email: ${newEmail}`);
-  //     console.log(`Logged in with token: ${token}`);
-
-  //     handleLogInGood(newToken, newId, newEmail);
-  //   } else {
-  //     alert('Incorrect email or password');
-  //   }
-  // };
 
   return (
     <form onSubmit={tryLogInFF}>
       <p>
-        <label htmlFor="pass">Password</label>
+        <input
+          id="email"
+          placeholder="Enter email..."
+          type="text"
+          required
+          onChange={handleChangeEmail}
+        />
+      </p>
+      <p>
         <input
           id="pass"
           placeholder="Enter password..."
@@ -66,16 +49,8 @@ const LogIn = ({ handleLogIn }) => {
         />
       </p>
       <p>
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          placeholder="Enter email..."
-          type="text"
-          required
-          onChange={handleChangeEmail}
-        />
+        <button type="submit">Log In</button>
       </p>
-      <button type="submit">Log In</button>
     </form>
   );
 };

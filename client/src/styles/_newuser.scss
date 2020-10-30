@@ -1,0 +1,22 @@
+.New {
+  display: flex;
+  justify-content: right;
+  form {
+    min-width: 400px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: aqua;
+    margin: 50px;
+    p {
+      margin: 10px;
+      justify-content: center;
+      background-color: red;
+      display: flex;
+      text-align: center;
+      * {
+        padding: 10px;
+      }
+    }
+  }
+}

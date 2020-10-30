@@ -1,8 +1,13 @@
 import React from 'react';
+import NewPoll from '../components/NewPoll.js';
+import NewUser from './NewUser.js';
 
-const Home = () => {
+const Home = ({ name, token, email }) => {
   return (
-    <main className="page home">TIYIYYYYYYYYYYYYIIIIIIIIIIIIIIIIIIAH!</main>
+    <main className="page home">
+      <NewPoll name={name} token={token} email={email} />
+      <NewUser />
+    </main>
   );
 };
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { browserHistory } from 'react-router';
+import { useParams } from 'react-router-dom';
 
 const EditUser = ({ token, email }) => {
   const { id } = useParams();
@@ -8,7 +7,7 @@ const EditUser = ({ token, email }) => {
   const [person, setPerson] = useState({});
 
   const fetchStudent = async (id) => {
-    const response = await fetch(`/${id}`);
+    const response = await fetch(`/user/${id}`);
     const personData = await response.json();
     setPerson(personData);
     // console.log({ person });
@@ -52,7 +51,7 @@ const EditUser = ({ token, email }) => {
         token: token,
       },
     });
-    if (response.status == 200) {
+    if (response.status === 200) {
       alert('Profile sucessfully edited! /n Log in again please');
       console.log('Profile sucessfully edited!');
 
