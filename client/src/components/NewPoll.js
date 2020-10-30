@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-const NewPoll = ({ name, token, email }) => {
+const NewPoll = ({ name, token, email, id }) => {
   const [content, setContent] = useState('');
+  const [title, setTitle] = useState('');
 
   const postNewPoll = async (event) => {
     event.preventDefault();
@@ -9,6 +10,8 @@ const NewPoll = ({ name, token, email }) => {
       method: 'POST',
       body: JSON.stringify({
         name: name,
+        authorId: id,
+        title: title,
         content: content,
       }),
       headers: {
@@ -19,7 +22,7 @@ const NewPoll = ({ name, token, email }) => {
     console.log(response);
 
     if (response.status === 200) {
-      alert('Poll sucessfully created! /n');
+      alert('Poll sucessfully created!');
       console.log('Profile sucessfully edited!');
 
       // window.location.href = '/users';
@@ -33,21 +36,41 @@ const NewPoll = ({ name, token, email }) => {
     const { value } = event.currentTarget;
     setContent(value);
   };
+  const handleChangePollTitle = (event) => {
+    const { value } = event.currentTarget;
+    setTitle(value);
+  };
 
   return (
     <div>
       {token !== '' ? (
-        <form className="new-poll" onSubmit={postNewPoll}>
-          <label htmlFor="name">Write a new proposition:</label>
-          <input
-            id="name"
-            placeholder="Enter poll..."
-            type="text"
-            required
-            onChange={handleChangePollContent}
-          />
-
-          <button type="submit">Post new Poll</button>
+        <form className="poll" onSubmit={postNewPoll}>
+          <div>
+            {' '}
+            <label htmlFor="name">Write a new proposition:</label>
+          </div>{' '}
+          <div>
+            {' '}
+            <input
+              id="title"
+              placeholder="Enter title..."
+              type="text"
+              required
+              onChange={handleChangePollTitle}
+            />{' '}
+          </div>{' '}
+          <div className="pollcontent">
+            <input
+              id="poll-content"
+              placeholder="Enter poll..."
+              type="text"
+              required
+              onChange={handleChangePollContent}
+            />
+          </div>
+          <div>
+            <button type="submit">Post new Poll</button>
+          </div>{' '}
         </form>
       ) : (
         <></>

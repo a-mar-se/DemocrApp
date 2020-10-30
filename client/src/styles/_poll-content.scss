@@ -1,22 +1,54 @@
+@import 'variables';
 .allpolls {
   display: flex;
-  justify-content: left;
+  flex-direction: row;
+  margin: auto;
+  justify-content: center;
   flex-wrap: wrap;
+}
 
-  .poll {
-    background-color: black;
+.poll {
+  background-color: $color2;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 40vw;
+  margin: 5px;
+
+  div {
     padding: 5px;
+    margin: 5px;
+    background-color: $color1;
+  }
+  .poll-title {
     display: flex;
     flex-direction: column;
-    width: 40vw;
-    margin: 5px;
-    div {
-      padding: 5px;
-      // margin: 5px;
-      background-color: aqua;
+    align-items: center;
+    background-color: blanchedalmond;
+  }
+
+  .reaction-bar,
+  .poll-results {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    * {
+      padding: 10px;
     }
-    .pollcontent {
-      // min-height: vh;
-    }
+  }
+}
+.pollcontent {
+  min-height: 200px;
+  // width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: blanchedalmond;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  input {
+    width: 80%;
+    height: 200px;
   }
 }

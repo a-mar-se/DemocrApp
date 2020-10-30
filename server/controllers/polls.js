@@ -4,6 +4,7 @@ import {
   updatePoll,
   sendDeletePetitionPoll,
   getPollById,
+  getRandomPoll,
 } from '../models/polls.js';
 
 import logger from '../lib/logger.js';
@@ -80,6 +81,16 @@ export const listSinglePoll = async (request, response, next) => {
     params: { id },
   } = request;
   const dataResource = await getPollById(id);
+  if (dataResource) {
+    return response.status(200).send(dataResource);
+  } else {
+    return response.status(404).send({
+      message: 'Error: Profile not found.',
+    });
+  }
+};
+export const listRandomPoll = async (request, response, next) => {
+  const dataResource = await getRandomPoll();
   if (dataResource) {
     return response.status(200).send(dataResource);
   } else {

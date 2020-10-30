@@ -16,6 +16,7 @@ import {
   listAllPolls,
   listSinglePoll,
   editPoll,
+  listRandomPoll,
   deletePoll,
 } from '../controllers/polls.js';
 import db from '../models/db.js';
@@ -34,6 +35,7 @@ dbRouter.delete('/delete/:id', authorize, deletePerson);
 dbRouter.post('/newPoll', createNewPoll);
 dbRouter.get('/polls', listAllPolls);
 dbRouter.get('/poll/:id', listSinglePoll);
+dbRouter.get('/randompoll', listRandomPoll);
 dbRouter.put('/poll/edit/:id', authorizePoll, editPoll);
 dbRouter.delete('/poll/delete/:id', authorizePoll, deletePoll);
 

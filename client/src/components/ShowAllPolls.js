@@ -7,25 +7,37 @@ class ShowAllPolls extends React.Component {
 
   state = {
     data: [],
+    changingPoll: false,
   };
   async componentDidMount() {
+    await this.refreshPolls();
+  }
+
+  refreshPolls = async () => {
     const res = await fetch(`/polls`);
     const data = await res.json();
     this.setState({ data });
-  }
+  };
 
   render() {
     return (
-      <main className="page allpolls">
+      <main className="allpolls">
         {this.state.data.map((poll, i) => {
           return (
             <Poll
+              username={this.props.name}
               name={poll.name}
               content={poll.content}
               key={i}
-              against={poll.against}
-              favor={poll.favor}
+              nagainst={poll.nagainst}
+              nfavor={poll.nfavor}
               id={poll._id}
+              token={this.props.token}
+              email={this.props.email}
+              title={poll.title}
+              comments={poll.comments}
+              authorId={poll.authorId}
+              refreshPolls={this.refreshPolls}
             />
           );
         })}
