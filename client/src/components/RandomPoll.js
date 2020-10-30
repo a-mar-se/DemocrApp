@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const RandomPoll = ({ token, email, username }) => {
   const [data, setData] = useState('');
   const [newComment, setNewComment] = useState('');
-
+  console.log(newComment);
   const getRandomPoll = async () => {
     const res = await fetch(`/randompoll`);
     const datan = await res.json();
@@ -27,9 +27,9 @@ const RandomPoll = ({ token, email, username }) => {
   const handleFavor = () => {
     handleReactToPoll();
   };
-  const handleEdit = () => {
-    handleReactToPoll();
-  };
+  // const handleEdit = () => {
+  //   handleReactToPoll();
+  // };
   const handleDelete = async () => {
     // console.log(res);
     window.confirm('Are you sure you want to delete this poll?');
@@ -81,12 +81,15 @@ const RandomPoll = ({ token, email, username }) => {
       <div className="reaction-bar">
         <button onClick={handleAgainst}>Against Poll</button>
         <button onClick={handleFavor}>Agree with Poll</button>
-        <input
-          type="textarea"
-          placeholder="Write comment"
-          onClick={handleReactToPoll}
-          onChange={handleComment}
-        ></input>
+        <form>
+          <input
+            type="textarea"
+            placeholder="Write comment"
+            onClick={handleReactToPoll}
+            onChange={handleComment}
+          ></input>
+          <button type="submit">Comment</button>
+        </form>
       </div>
       {username === data.name ? (
         <div className="edit-bar">

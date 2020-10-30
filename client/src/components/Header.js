@@ -24,9 +24,15 @@ const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
           <Link to="/wall">All Polls</Link>
         </li>
 
-        <li>
-          {token !== '' ? <Link to={`/profile/${id}`}>Profile</Link> : <></>}
-        </li>
+        {token !== '' ? (
+          <li>
+            {' '}
+            <Link to={`/profile/${id}`}>Profile</Link>{' '}
+          </li>
+        ) : (
+          <></>
+        )}
+
         <li>
           <input
             type="text"

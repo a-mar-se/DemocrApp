@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Poll } from '../models/polls.js';
+import { User } from '../models/user.js';
 
 export const authorize = async (req, res, next) => {
   try {
@@ -25,13 +26,15 @@ export const authorizePoll = async (req, res, next) => {
   try {
     const email = await req.headers.email; // Email of logged user
     const name = await req.body.name; // author of commment
-    const id = await req.body.id; // id of commment
+    const id = await req.headers.id; // id of commment
     const token = await req.headers.token; // token of logged user
 
-    const decoded = jwt.verify(token, 'Token');
-    const ussur = await Poll.findById(id);
+    const decoded = jwt.verify(token, 'Token'); // If the user is logged
     if (decoded.email === email) {
+      const ussur = await Poll.findById(id);
+      // console.log(ussur);
       if (ussur.name == name) {
+        // If the logged user is the same as the author of the comment
         next();
       }
     } else {

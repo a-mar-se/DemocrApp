@@ -21,7 +21,7 @@ class ShowAllPolls extends React.Component {
 
   render() {
     return (
-      <main className="allpolls">
+      <div className="allpolls">
         {this.state.data.map((poll, i) => {
           return (
             <Poll
@@ -41,7 +41,7 @@ class ShowAllPolls extends React.Component {
             />
           );
         })}
-      </main>
+      </div>
     );
   }
 }

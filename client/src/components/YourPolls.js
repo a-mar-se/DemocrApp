@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import NewPoll from './NewPoll.js';
 
-const NewPoll = ({ name, token, email, id }) => {
+const YourPolls = ({ name, token, email, id }) => {
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
 
@@ -47,39 +48,9 @@ const NewPoll = ({ name, token, email, id }) => {
 
   return (
     <div>
-      {token !== '' ? (
-        <form className="poll" onSubmit={postNewPoll}>
-          <div>
-            {' '}
-            <label htmlFor="name">Write a new proposition:</label>
-          </div>{' '}
-          <div>
-            {' '}
-            <input
-              id="title"
-              placeholder="Enter title..."
-              type="text"
-              required
-              onChange={handleChangePollTitle}
-            />{' '}
-          </div>{' '}
-          <div className="pollcontent">
-            <input
-              id="poll-content"
-              placeholder="Enter poll..."
-              type="text"
-              required
-              onChange={handleChangePollContent}
-            />
-          </div>
-          <div>
-            <button type="submit">Post new Poll</button>
-          </div>{' '}
-        </form>
-      ) : (
-        <></>
-      )}
+      <NewPoll />
+      All your polls from most recent to lastest
     </div>
   );
 };
-export default NewPoll;
+export default YourPolls;

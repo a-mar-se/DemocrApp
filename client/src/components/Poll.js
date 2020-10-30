@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Poll = ({
   content,
@@ -16,7 +16,7 @@ const Poll = ({
   refreshPolls,
 }) => {
   const [newComment, setNewComment] = useState('');
-
+  console.log(newComment);
   const handleReactToPoll = async () => {
     if (token !== '') {
     } else {
@@ -30,9 +30,9 @@ const Poll = ({
   const handleFavor = () => {
     handleReactToPoll();
   };
-  const handleEdit = () => {
-    handleReactToPoll();
-  };
+  // const handleEdit = () => {
+  //   handleReactToPoll();
+  // };
   const handleDelete = async () => {
     // console.log(res);
     window.confirm('Are you sure you want to delete this poll?');
@@ -71,7 +71,7 @@ const Poll = ({
   };
   return (
     <div className="poll">
-      <div>
+      <div className="titlePoll">
         "{title}" by <Link to={`/user/${authorId}`}>{name}</Link>
       </div>
       <div className="pollcontent"> {content}</div>

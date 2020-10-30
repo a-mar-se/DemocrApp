@@ -1,9 +1,10 @@
 @import 'basic';
-@import 'header';
-@import 'newuser';
-@import 'footer';
-@import 'user-content';
-@import 'poll-content';
-@import 'new-poll';
-@import 'home';
+@import './pages/page';
+@import './pages/home';
+@import './components/header';
+@import './components/footer';
+@import './components/new-poll';
+@import './components/newuser';
+@import './components/poll-content';
+@import './components/user-content';
 @import 'variables';

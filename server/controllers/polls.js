@@ -38,8 +38,8 @@ export const editPoll = async (request, response, next) => {
     params: { id },
     body,
   } = request;
-  const token = request.headers.token;
-  logger.info(request.headers.token);
+  // const token = request.headers.token;
+  // logger.info(request.headers.token);
 
   try {
     const dataResource = await updatePoll(id, body);

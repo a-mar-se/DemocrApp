@@ -1,6 +1,6 @@
 // import './App.css';
 import React, { useState } from 'react';
-import { Switch, BrowserRouter, Route, Link } from 'react-router-dom';
+import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import Home from './pages/Home.js';
 import Footer from './components/Footer.js';
 import Header from './components/Header.js';
@@ -34,7 +34,7 @@ const App = () => {
   };
 
   return (
-    <main>
+    <div className="app">
       <BrowserRouter>
         <Header
           token={token}
@@ -43,8 +43,7 @@ const App = () => {
           logOut={logOut}
           email={email}
           name={name}
-        />
-
+        />{' '}
         <Switch>
           <Route
             exact
@@ -65,7 +64,7 @@ const App = () => {
           />{' '}
           <Route
             path="/poll/edit/:id"
-            render={() => <EditPoll token={token} email={email} />}
+            render={() => <EditPoll token={token} email={email} name={name} />}
           />
           <Route
             path="/wall"
@@ -75,7 +74,7 @@ const App = () => {
         </Switch>
       </BrowserRouter>
       <Footer />
-    </main>
+    </div>
   );
 };
 

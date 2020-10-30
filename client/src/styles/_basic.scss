@@ -51,20 +51,14 @@ code {
   }
 }
 
-form {
-  display: flex;
-  justify-content: center;
-}
-
-form > p {
-  flex-direction: column;
-}
-
 * {
   border: 1px solid;
   margin: 0;
 }
 
-main {
-  height: 1 auto;
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
