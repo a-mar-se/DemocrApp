@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import LogIn from './LogIn.js';
+import LogInfo from './LogInfo.js';
 
-const Header = ({ id, token, handleLogIn, logOut }) => {
+const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
   const changeSearch = () => {
     console.log('typing');
   };
@@ -34,13 +35,19 @@ const Header = ({ id, token, handleLogIn, logOut }) => {
           />
         </li>
       </ul>
-      {token !== '' ? (
-        <Link to="/">
-          <button onClick={logOut}>Log Out</button>
-        </Link>
-      ) : (
-        <LogIn handleLogIn={handleLogIn} />
-      )}
+
+      <div className="loggedIn">
+        {token !== '' ? (
+          <LogInfo name={name} email={email} token={token} />
+        ) : null}
+        {token !== '' ? (
+          <Link to="/">
+            <button onClick={logOut}>Log Out</button>
+          </Link>
+        ) : (
+          <LogIn handleLogIn={handleLogIn} />
+        )}
+      </div>
     </header>
   );
 };

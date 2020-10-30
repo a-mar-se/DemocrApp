@@ -1,21 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
-const Poll = ({
-  content,
-  name,
-  authorId,
-  nagainst,
-  nfavor,
-  token,
-  username,
-  id,
-  email,
-  comments,
-  title,
-  refreshPolls,
-}) => {
+const RandomPoll = ({ token, email, username }) => {
+  const [data, setData] = useState('');
   const [newComment, setNewComment] = useState('');
+
+  const getRandomPoll = async () => {
+    const res = await fetch(`/randompoll`);
+    const datan = await res.json();
+    setData(datan);
+  };
+  useEffect(() => {
+    getRandomPoll();
+  }, []);
 
   const handleReactToPoll = async () => {
     if (token !== '') {
@@ -36,9 +33,9 @@ const Poll = ({
   const handleDelete = async () => {
     // console.log(res);
     window.confirm('Are you sure you want to delete this poll?');
-    const res = await fetch(`/poll/delete/${id}`, {
+    const res = await fetch(`/poll/delete/${data._id}`, {
       method: 'DELETE',
-      body: JSON.stringify({ id, name: username }),
+      body: JSON.stringify({ id: data._id, name: username }),
       headers: {
         'Content-Type': 'application/json',
         token: token,
@@ -47,7 +44,7 @@ const Poll = ({
     });
     if (res.status === 200) {
       console.log('Poll sucessfully deleted');
-      refreshPolls();
+      getRandomPoll();
     } else {
       alert('Problem verifying identity.');
     }
@@ -69,15 +66,16 @@ const Poll = ({
       setNewComment('');
     }
   };
+
   return (
     <div className="poll">
       <div>
-        "{title}" by <Link to={`/user/${authorId}`}>{name}</Link>
+        "{data.title}" by <Link to={`/user/${data.authorId}`}>{data.name}</Link>
       </div>
-      <div className="pollcontent"> {content}</div>
+      <div className="pollcontent"> {data.content}</div>
       <div className="poll-results">
-        <div>Against: {nagainst}</div>
-        <div>Favor: {nfavor}</div>
+        <div>Against: {data.nagainst}</div>
+        <div>Favor: {data.nfavor}</div>
       </div>
 
       <div className="reaction-bar">
@@ -90,17 +88,17 @@ const Poll = ({
           onChange={handleComment}
         ></input>
       </div>
-      {username === name ? (
+      {username === data.name ? (
         <div className="edit-bar">
           <button>
             {' '}
-            <Link to={`/poll/edit/${id}`}>Edit Poll</Link>
+            <Link to={`/poll/edit/${data._id}`}>Edit Poll</Link>
           </button>
           <button onClick={handleDelete}>Delete Poll</button>
         </div>
       ) : null}
-      <div>Comments {comments}</div>
+      <div>Comments {data.comments}</div>
     </div>
   );
 };
-export default Poll;
+export default RandomPoll;

@@ -43,7 +43,7 @@ const LogIn = ({ handleLogIn }) => {
         <input
           id="pass"
           placeholder="Enter password..."
-          type="text"
+          type="password"
           required
           onChange={handleChangePass}
         />

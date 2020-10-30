@@ -27,6 +27,7 @@ export const authorizePoll = async (req, res, next) => {
     const name = await req.body.name; // author of commment
     const id = await req.body.id; // id of commment
     const token = await req.headers.token; // token of logged user
+
     const decoded = jwt.verify(token, 'Token');
     const ussur = await Poll.findById(id);
     if (decoded.email === email) {

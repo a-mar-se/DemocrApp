@@ -6,8 +6,7 @@ class LogInfo extends React.Component {
       <div>
         {this.props.token !== '' ? (
           <div>
-            Hello {this.props.email}, you are Logged in with token:{' '}
-            {this.props.token}
+            Hello {this.props.email}, with email: {this.props.name}
           </div>
         ) : (
           <div></div>
