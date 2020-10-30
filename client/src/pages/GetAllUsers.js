@@ -16,7 +16,7 @@ class GetAllUsers extends React.Component {
 
   render() {
     return (
-      <main className="page">
+      <main className="page allusers">
         {this.state.data.map((person, i) => {
           return (
             <Person

@@ -50,6 +50,7 @@ export const signIn = async (request, response, next) => {
         _id: user._id,
         email: user.email,
         token,
+        name: user.name,
       });
       logger.info(response.Token);
       return response;

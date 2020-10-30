@@ -4,7 +4,7 @@ import ClickablePerson from './ClickablePerson';
 class Person extends React.Component {
   render() {
     return (
-      <div className="person-details">
+      <div className="user-content">
         <ClickablePerson id={this.props.id} name={this.props.name} surname="" />
 
         <div>Password: {this.props.password}</div>

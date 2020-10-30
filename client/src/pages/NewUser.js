@@ -69,7 +69,9 @@ const NewUser = () => {
             onChange={handleChangeEmail}
           />
         </p>
-        <button type="submit">Add person to database</button>
+        <p>
+          <button type="submit">Add person to database</button>
+        </p>
       </form>
     </main>
   );

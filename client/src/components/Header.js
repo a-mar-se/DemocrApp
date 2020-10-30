@@ -1,34 +1,47 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LogIn from './LogIn.js';
 
-class Header extends React.Component {
-  render() {
-    return (
-      <div>
-        <ul id="nav">
-          <li>
-            <Link className="hidden" to="/">
-              Home
-            </Link>
-          </li>
+const Header = ({ id, token, handleLogIn, logOut }) => {
+  const changeSearch = () => {
+    console.log('typing');
+  };
+  return (
+    <header>
+      <ul id="nav">
+        <li>
+          <Link className="hidden" to="/">
+            Home
+          </Link>
+        </li>
 
-          <li>
-            <Link to="/users">All Users</Link>
-          </li>
+        <li>
+          <Link to="/users">All Users</Link>
+        </li>
 
-          <li>
-            <Link to="/wall">All Polls</Link>
-          </li>
-          <li>
-            {this.props.token !== '' ? (
-              <Link to={`/profile/${this.props.id}`}>Profile</Link>
-            ) : (
-              <Link to="/newUser">Sign Up</Link>
-            )}
-          </li>
-        </ul>
-      </div>
-    );
-  }
-}
+        <li>
+          <Link to="/wall">All Polls</Link>
+        </li>
+
+        <li>
+          {token !== '' ? <Link to={`/profile/${id}`}>Profile</Link> : <></>}
+        </li>
+        <li>
+          <input
+            type="text"
+            onChange={changeSearch}
+            placeholder="Search user..."
+          />
+        </li>
+      </ul>
+      {token !== '' ? (
+        <Link to="/">
+          <button onClick={logOut}>Log Out</button>
+        </Link>
+      ) : (
+        <LogIn handleLogIn={handleLogIn} />
+      )}
+    </header>
+  );
+};
 export default Header;

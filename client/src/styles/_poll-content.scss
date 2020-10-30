@@ -1,0 +1,22 @@
+.allpolls {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+
+  .poll {
+    background-color: black;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+    margin: 5px;
+    div {
+      padding: 5px;
+      // margin: 5px;
+      background-color: aqua;
+    }
+    .pollcontent {
+      // min-height: vh;
+    }
+  }
+}

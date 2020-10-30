@@ -18,18 +18,19 @@ const LogIn = ({ handleLogIn }) => {
   const tryLogInFF = async (event) => {
     event.preventDefault();
     const validateLog = await tryLogIn(newEmail, newPassword);
+    console.log(validateLog);
     if (validateLog != null) {
       const ttoken = validateLog.newToken;
       const eemail = validateLog.newEmail;
       const iid = validateLog.newId;
-      handleLogIn(ttoken, iid, eemail);
+      const namee = validateLog.newName;
+      handleLogIn(ttoken, iid, eemail, namee);
     }
   };
 
   return (
     <form onSubmit={tryLogInFF}>
       <p>
-        <label htmlFor="email">Email</label>
         <input
           id="email"
           placeholder="Enter email..."
@@ -39,7 +40,6 @@ const LogIn = ({ handleLogIn }) => {
         />
       </p>
       <p>
-        <label htmlFor="pass">Password</label>
         <input
           id="pass"
           placeholder="Enter password..."
@@ -48,7 +48,9 @@ const LogIn = ({ handleLogIn }) => {
           onChange={handleChangePass}
         />
       </p>
-      <button type="submit">Log In</button>
+      <p>
+        <button type="submit">Log In</button>
+      </p>
     </form>
   );
 };

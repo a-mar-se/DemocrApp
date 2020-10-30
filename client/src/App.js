@@ -1,4 +1,4 @@
-import './App.css';
+// import './App.css';
 import React, { useState } from 'react';
 import { Switch, BrowserRouter, Route, Link } from 'react-router-dom';
 import Home from './pages/Home.js';
@@ -21,64 +21,53 @@ const App = () => {
   const [name, setNewName] = useState('');
   const [id, setNewId] = useState('');
 
-  const logOut = async (event) => {
+  const logOut = async () => {
     console.log('User has logged out!');
     setToken('');
     setNewId('');
     setNewName('');
   };
 
-  const handleLogIn = async (ttoken, idd, emaill) => {
+  const handleLogIn = async (ttoken, idd, emaill, namee) => {
     setToken(ttoken);
     setNewId(idd);
     setEmail(emaill);
+    setNewName(namee);
   };
 
   return (
-    <>
-      <div>
-        <BrowserRouter>
-          <Header token={token} id={id} />
-          {token !== '' ? (
-            <Link to="/">
-              <button onClick={logOut}>Log Out</button>
-            </Link>
-          ) : (
-            <LogIn handleLogIn={handleLogIn} />
-          )}
-          {token === '' ? (
-            <Link to="/newUser">
-              <button>Sign Up</button>
-            </Link>
-          ) : null}
-          <LogInfo token={token} email={email} />
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => <Home name={name} token={token} />}
-            />
-            <Route path="/users" component={GetAllUsers} />
-            <Route path="/newUser" component={NewUser} />
-            <Route
-              path="/user/:id"
-              render={() => <ShowPerson token={token} />}
-            />
-            <Route
-              path="/profile/:id"
-              render={() => <ShowProfile token={token} email={email} />}
-            />
-            <Route
-              path="/edit/:id"
-              render={() => <EditUser token={token} email={email} />}
-            />
-            <Route path="/wall" render={() => <Wall />} />
-            <Route path="/*" component={Error} />
-          </Switch>
-        </BrowserRouter>
-        <Footer />
-      </div>
-    </>
+    <main>
+      <BrowserRouter>
+        <Header
+          token={token}
+          id={id}
+          handleLogIn={handleLogIn}
+          logOut={logOut}
+        />
+
+        <LogInfo token={token} email={email} />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => <Home email={email} name={name} token={token} />}
+          />
+          <Route path="/users" component={GetAllUsers} />
+          <Route path="/user/:id" render={() => <ShowPerson token={token} />} />
+          <Route
+            path="/profile/:id"
+            render={() => <ShowProfile token={token} email={email} />}
+          />
+          <Route
+            path="/edit/:id"
+            render={() => <EditUser token={token} email={email} />}
+          />
+          <Route path="/wall" render={() => <Wall />} />
+          <Route path="/*" component={Error} />
+        </Switch>
+      </BrowserRouter>
+      <Footer />
+    </main>
   );
 };
 

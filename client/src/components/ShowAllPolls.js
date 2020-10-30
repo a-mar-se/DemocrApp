@@ -16,7 +16,7 @@ class ShowAllPolls extends React.Component {
 
   render() {
     return (
-      <main className="page">
+      <main className="page allpolls">
         {this.state.data.map((poll, i) => {
           return (
             <Poll

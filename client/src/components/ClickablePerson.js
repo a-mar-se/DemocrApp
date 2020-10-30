@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 class ClickablePerson extends React.Component {
   render() {
     return (
-      <div className="person-details">
+      <div>
         <Link to={`/user/${this.props.id}`}>
           {this.props.name} {this.props.surname}
         </Link>

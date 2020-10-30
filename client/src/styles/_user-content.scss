@@ -1,0 +1,19 @@
+.allusers {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+
+  .user-content {
+    background-color: black;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    margin: 5px;
+    div {
+      padding: 5px;
+      // margin: 5px;
+      background-color: aqua;
+    }
+  }
+}

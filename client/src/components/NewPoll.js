@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
 
-const NewPoll = ({ name, token }) => {
+const NewPoll = ({ name, token, email }) => {
   const [content, setContent] = useState('');
 
-  const postNewPoll = async (contents) => {
-    await fetch(`/polls`, {
+  const postNewPoll = async (event) => {
+    event.preventDefault();
+    const response = await fetch(`/newPoll`, {
       method: 'POST',
       body: JSON.stringify({
         name: name,
-        content: contents,
+        content: content,
       }),
       headers: {
         'Content-Type': 'application/json',
-        token: token,
       },
     });
 
+    console.log(response);
+
+    if (response.status === 200) {
+      alert('Poll sucessfully created! /n');
+      console.log('Profile sucessfully edited!');
+
+      // window.location.href = '/users';
+    } else {
+      console.log('Error trying to post a poll');
+    }
     console.log('New poll added!');
   };
 
@@ -27,7 +37,7 @@ const NewPoll = ({ name, token }) => {
   return (
     <div>
       {token !== '' ? (
-        <form className="new-poll" onSubmit={() => postNewPoll(content)}>
+        <form className="new-poll" onSubmit={postNewPoll}>
           <label htmlFor="name">Write a new proposition:</label>
           <input
             id="name"
