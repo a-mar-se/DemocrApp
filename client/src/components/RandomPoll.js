@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Poll from './Poll.js';
 
 const RandomPoll = ({ token, email, username }) => {
   const [data, setData] = useState('');
@@ -68,40 +69,20 @@ const RandomPoll = ({ token, email, username }) => {
   };
 
   return (
-    <div className="poll">
-      <div>
-        "{data.title}" by <Link to={`/user/${data.authorId}`}>{data.name}</Link>
-      </div>
-      <div className="pollcontent"> {data.content}</div>
-      <div className="poll-results">
-        <div>Against: {data.nagainst}</div>
-        <div>Favor: {data.nfavor}</div>
-      </div>
-
-      <div className="reaction-bar">
-        <button onClick={handleAgainst}>Against Poll</button>
-        <button onClick={handleFavor}>Agree with Poll</button>
-        <form>
-          <input
-            type="textarea"
-            placeholder="Write comment"
-            onClick={handleReactToPoll}
-            onChange={handleComment}
-          ></input>
-          <button type="submit">Comment</button>
-        </form>
-      </div>
-      {username === data.name ? (
-        <div className="edit-bar">
-          <button>
-            {' '}
-            <Link to={`/poll/edit/${data._id}`}>Edit Poll</Link>
-          </button>
-          <button onClick={handleDelete}>Delete Poll</button>
-        </div>
-      ) : null}
-      <div>Comments {data.comments}</div>
-    </div>
+    <Poll
+      username={username}
+      name={data.name}
+      content={data.content}
+      nagainst={data.nagainst}
+      nfavor={data.nfavor}
+      id={data._id}
+      token={token}
+      email={email}
+      title={data.title}
+      comments={data.comments}
+      authorId={data.authorId}
+      // pollId={data._id}
+    />
   );
 };
 export default RandomPoll;

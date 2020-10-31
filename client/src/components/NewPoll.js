@@ -6,7 +6,7 @@ const NewPoll = ({ name, token, email, id }) => {
 
   const postNewPoll = async (event) => {
     event.preventDefault();
-    const response = await fetch(`/newPoll`, {
+    const response = await fetch(`/new-poll`, {
       method: 'POST',
       body: JSON.stringify({
         name: name,
@@ -19,7 +19,7 @@ const NewPoll = ({ name, token, email, id }) => {
       },
     });
 
-    console.log(response);
+    // console.log(response);
 
     if (response.status === 200) {
       alert('Poll sucessfully created!');

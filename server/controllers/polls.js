@@ -1,18 +1,36 @@
 import {
   getAllPolls,
+  getAll,
   createPollResource,
   updatePoll,
   sendDeletePetitionPoll,
   getPollById,
   getRandomPoll,
+  createCommentResource,
+  getComments,
 } from '../models/polls.js';
 
-import logger from '../lib/logger.js';
+// import logger from '../lib/logger.js';
 
 export const createNewPoll = async (request, response) => {
   const { body } = request;
   try {
     const newData = await createPollResource(body);
+    console.log(newData);
+    return response.status(200).send(newData);
+  } catch (error) {
+    // console.log(response);
+    return response.status(500).send({
+      message: `Error: not connection to database, ${error}.`,
+    });
+  }
+};
+
+export const createNewComment = async (request, response) => {
+  const { body } = request;
+  try {
+    const newData = await createCommentResource(body);
+    // console.log(newData);
     return response.status(200).send(newData);
   } catch (error) {
     return response.status(500).send({
@@ -22,9 +40,33 @@ export const createNewPoll = async (request, response) => {
 };
 
 export const listAllPolls = async (request, response, next) => {
-  console.log('end');
   try {
     const data = await getAllPolls();
+    return response.status(200).send(data);
+  } catch (error) {
+    return response.status(500).send({
+      message: `The database can´t be access. Error: ${error}`,
+    });
+  }
+};
+
+export const listAll = async (request, response, next) => {
+  try {
+    const data = await getAll();
+    return response.status(200).send(data);
+  } catch (error) {
+    return response.status(500).send({
+      message: `The database can´t be access. Error: ${error}`,
+    });
+  }
+};
+
+export const listComments = async (request, response, next) => {
+  const {
+    params: { id },
+  } = request;
+  try {
+    const data = await getComments(id);
     return response.status(200).send(data);
   } catch (error) {
     return response.status(500).send({
@@ -38,8 +80,6 @@ export const editPoll = async (request, response, next) => {
     params: { id },
     body,
   } = request;
-  // const token = request.headers.token;
-  // logger.info(request.headers.token);
 
   try {
     const dataResource = await updatePoll(id, body);
@@ -51,7 +91,6 @@ export const editPoll = async (request, response, next) => {
       .send('Error: Profile not found or not logged in. Cannot be edited');
   }
 };
-
 export const deletePoll = async (request, response, next) => {
   const {
     params: { id },

@@ -48,7 +48,7 @@ const YourPolls = ({ name, token, email, id }) => {
 
   return (
     <div>
-      <NewPoll />
+      <NewPoll name={name} id={id} />
       All your polls from most recent to lastest
     </div>
   );

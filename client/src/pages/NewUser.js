@@ -38,7 +38,7 @@ const NewUser = () => {
 
   return (
     <form onSubmit={handleSubmit} className="New">
-      <p className="logo">Logo</p>
+      <p className="logo">DemocrApp</p>
       <p className="intro">
         Register to join the democratic app. Post your ideas and let the people
         vote if they agree with that proposition or not .

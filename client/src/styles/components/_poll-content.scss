@@ -1,9 +1,10 @@
 @import 'variables';
 .allpolls {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   // margin: auto;
-  justify-content: center;
+  // justify-content: center;
+  align-content: center;
   flex-wrap: wrap;
 }
 
@@ -15,9 +16,12 @@
   flex-wrap: wrap;
   height: fit-content;
   width: 40vw;
-  margin: 50px;
+  margin: 10px;
 
   div {
+    padding: 2.5px;
+  }
+  .poll-section {
     padding: 5px;
     margin: 5px;
     background-color: $color1;
@@ -26,7 +30,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: blanchedalmond;
   }
 
   .reaction-bar,
@@ -42,7 +45,6 @@
 .pollcontent {
   display: flex;
   flex-direction: column;
-  background-color: blanchedalmond;
 
   display: flex;
   flex-direction: column;
@@ -54,4 +56,24 @@
 
 .titlePoll {
   font-weight: 900;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  * {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.writeComment {
+  display: flex;
+  justify-content: space-between;
+  input {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+  }
+  button {
+    width: 1fr;
+  }
 }
