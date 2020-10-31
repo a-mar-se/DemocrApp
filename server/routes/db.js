@@ -5,7 +5,6 @@ import {
   listAllUsers,
   createNewUser,
   signIn,
-  editPerson,
   editPerson2,
   deletePerson,
   listPerson,
@@ -14,10 +13,13 @@ import {
 import {
   createNewPoll,
   listAllPolls,
+  listAll,
   listSinglePoll,
   editPoll,
   listRandomPoll,
+  listComments,
   deletePoll,
+  createNewComment,
 } from '../controllers/polls.js';
 import db from '../models/db.js';
 
@@ -32,11 +34,15 @@ dbRouter.put('/edit/:id', authorize, editPerson2);
 dbRouter.delete('/delete/:id', authorize, deletePerson);
 // dbRouter.post('/', createData);
 
-dbRouter.post('/newPoll', createNewPoll);
+dbRouter.post('/new-poll', createNewPoll);
+dbRouter.post('/new-comment', createNewComment);
 dbRouter.get('/polls', listAllPolls);
+dbRouter.get('/allm', listAll);
+dbRouter.get('/comments-by-id/:id', listComments);
 dbRouter.get('/poll/:id', listSinglePoll);
+// dbRouter.get('/vote/poll/:id', authorizeVote, giveVote);
 dbRouter.get('/randompoll', listRandomPoll);
 dbRouter.put('/poll/edit/:id', authorizePoll, editPoll);
-dbRouter.delete('/poll/delete/:id', authorizePoll, deletePoll);
+dbRouter.delete('/poll/delete/:id', deletePoll);
 
 export default dbRouter;

@@ -2,11 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LogIn from './LogIn.js';
 import LogInfo from './LogInfo.js';
+import variables from '../styles/_variables.scss';
 
 const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
   const changeSearch = () => {
     console.log('typing');
   };
+  const changeColor1 = (event) => {
+    console.log('color changed');
+    console.log(event.target.value);
+    document.style.setProperty('--color1', event.target.value);
+    // variables.color1 = event.target.value;
+  };
+
   return (
     <header>
       <ul id="nav">
@@ -24,9 +32,15 @@ const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
           <Link to="/wall">All Polls</Link>
         </li>
 
-        <li>
-          {token !== '' ? <Link to={`/profile/${id}`}>Profile</Link> : <></>}
-        </li>
+        {token !== '' ? (
+          <li>
+            {' '}
+            <Link to={`/profile/${id}`}>Profile</Link>{' '}
+          </li>
+        ) : (
+          <></>
+        )}
+
         <li>
           <input
             type="text"
@@ -35,7 +49,11 @@ const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
           />
         </li>
       </ul>
-
+      <h1>DemocrApp</h1>
+      {/* <div>
+        <input type="color" onChange={changeColor1} />
+        <input type="color" onChange={changeColor1} />
+      </div> */}
       <div className="loggedIn">
         {token !== '' ? (
           <LogInfo name={name} email={email} token={token} />

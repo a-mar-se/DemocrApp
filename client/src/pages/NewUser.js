@@ -37,43 +37,46 @@ const NewUser = () => {
   };
 
   return (
-    <main className="page New">
-      <form onSubmit={handleSubmit}>
-        <p>
-          <label htmlFor="name">Name</label>
-          <input
-            id="name"
-            placeholder="Enter name..."
-            type="text"
-            required
-            onChange={handleChangeName}
-          />
-        </p>
-        <p>
-          <label htmlFor="pass">Password</label>
-          <input
-            id="pass"
-            placeholder="Enter password..."
-            type="text"
-            required
-            onChange={handleChangePass}
-          />
-        </p>
-        <p>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            placeholder="Enter email..."
-            type="text"
-            required
-            onChange={handleChangeEmail}
-          />
-        </p>
-        <p>
-          <button type="submit">Add person to database</button>
-        </p>
-      </form>
-    </main>
+    <form onSubmit={handleSubmit} className="New">
+      <p className="logo">DemocrApp</p>
+      <p className="intro">
+        Register to join the democratic app. Post your ideas and let the people
+        vote if they agree with that proposition or not .
+      </p>
+      <p>
+        <label htmlFor="name">Name</label>
+        <input
+          id="name"
+          placeholder="Enter name..."
+          type="text"
+          required
+          onChange={handleChangeName}
+        />
+      </p>
+      <p>
+        <label htmlFor="pass">Password</label>
+        <input
+          id="pass"
+          placeholder="Enter password..."
+          type="text"
+          required
+          onChange={handleChangePass}
+        />
+      </p>
+      <p>
+        <label htmlFor="email">Email</label>
+        <input
+          id="email"
+          placeholder="Enter email..."
+          type="text"
+          required
+          onChange={handleChangeEmail}
+        />
+      </p>
+      <p>
+        <button type="submit">Add person to database</button>
+      </p>
+    </form>
   );
 };
 
