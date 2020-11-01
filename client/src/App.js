@@ -1,20 +1,19 @@
 // import './App.css';
 import React, { useState } from 'react';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
-import Home from './pages/Home.js';
+import Home from './pages/header_links/Home.js';
 import Footer from './components/Footer.js';
-import Header from './components/Header.js';
+import Header from './components/header/Header.js';
 import ShowPerson from './pages/student/showPerson.js';
-import EditUser from './pages/EditUser.js';
-import EditPoll from './pages/EditPoll.js';
+import EditUser from './components/user_info/EditUser.js';
+import EditPoll from './components/poll/EditPoll.js';
 import Error from './pages/Error.js';
-import GetAllUsers from './pages/GetAllUsers.js';
-import ShowProfile from './pages/ShowProfile.js';
-import Wall from './pages/Wall.js';
+import GetAllUsers from './pages/header_links/GetAllUsers.js';
+import ShowProfile from './pages/header_links/ShowProfile.js';
+import Wall from './pages/header_links/Wall.js';
 
 const App = () => {
   const [token, setToken] = useState('');
-  // const [newPassword, setNewPassword] = useState('');
   const [email, setEmail] = useState('');
   const [name, setNewName] = useState('');
   const [id, setNewId] = useState('');

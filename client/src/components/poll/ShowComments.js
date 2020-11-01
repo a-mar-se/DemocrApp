@@ -31,6 +31,7 @@ const ShowComments = ({ idComment, token, username, email }) => {
               authorId={comment.authorId}
               parentId={comment.parentId}
               key={i}
+              createdAt={comment.createdAt}
             />
           </>
         );

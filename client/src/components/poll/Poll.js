@@ -1,25 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ShowComments from './ShowComments.js';
+import TimeAgo from './TimeAgo.js';
+import ReactionBar from './ReactionBar.js';
 
-const Poll = ({
-  content,
-  name,
-  authorId,
-  nagainst,
-  nfavor,
-  token,
-  username,
-  pollId,
-  id,
-  email,
-  comments,
-  title,
-  refreshPolls,
-}) => {
+const Poll = ({ user, poll, refreshPolls }) => {
   const [newComment, setNewComment] = useState('');
   const handleReactToPoll = async () => {
-    if (token !== '') {
+    if (user.token !== '') {
     } else {
       alert('You need to log in to react to polls');
     }
@@ -30,9 +18,9 @@ const Poll = ({
     const response = await fetch(`/new-comment/`, {
       method: 'POST',
       body: JSON.stringify({
-        name: username,
-        authorId: authorId,
-        parentId: id,
+        name: user.name,
+        authorId: poll.authorId,
+        parentId: poll.id,
         content: newComment,
       }),
       headers: {
@@ -52,26 +40,19 @@ const Poll = ({
     // const contentObject = document.getElementById('comment-content');
     // contentObject.value = '';
   };
-
-  const handleAgainst = () => {
-    handleReactToPoll();
-  };
-  const handleFavor = () => {
-    handleReactToPoll();
-  };
   // const handleEdit = () => {
   //   handleReactToPoll();
   // };
   const handleDelete = async () => {
     // console.log(res);
     window.confirm('Are you sure you want to delete this poll?');
-    const res = await fetch(`/poll/delete/${id}`, {
+    const res = await fetch(`/poll/delete/${poll.id}`, {
       method: 'DELETE',
-      body: JSON.stringify({ id, name: username }),
+      body: JSON.stringify({ _id: poll.id, name: user.name }),
       headers: {
         'Content-Type': 'application/json',
-        token: token,
-        email: email,
+        token: user.token,
+        email: user.email,
       },
     });
     if (res.status === 200) {
@@ -90,34 +71,39 @@ const Poll = ({
   };
 
   const handleComment = (event) => {
-    if (token !== '') {
+    if (user.token !== '') {
       handleChangeComment(event);
     } else {
       event.currentTarget.value = '';
       setNewComment('');
     }
   };
+
   return (
     <div className="poll">
+      <div>"{poll.title}"</div>
       <div className="titlePoll poll-section ">
-        <div>"{title}"</div>
         <div>
-          {' '}
-          <Link to={`/user/${authorId}`}>{name}</Link>{' '}
+          <Link to={`/user/${poll.authorId}`}> {poll.name}</Link>{' '}
         </div>
-        <div>
-          <div>👎 {nagainst}</div>
-          <div>👍 {nfavor}</div>
-        </div>
-        <div>"Date"</div>
+        <div>👎 {poll.nagainst}</div>
+        <div>👍 {poll.nfavor}</div>
+        <TimeAgo createdAt={poll.createdAt} />
       </div>
-      <div className="pollcontent"> {content}</div>
+      <div className="pollcontent"> {poll.content}</div>
 
-      <div className="reaction-bar">
-        <button onClick={handleAgainst}>Against Poll</button>
-        <input type="range" />
-        <button onClick={handleFavor}>Agree with Poll</button>
-      </div>
+      <ReactionBar
+        poll={poll}
+        user={user}
+        token={user.token}
+        // id={id}
+        // nfavorPast={nfavor}
+        // favorPast={favor}
+        // againstPast={against}
+        // nagainstPast={nagainst}
+        // userId={id}
+      />
+
       <div>
         <form className="writeComment" onSubmit={postNewComment}>
           <input
@@ -129,20 +115,20 @@ const Poll = ({
           <button type="submit">Comment</button>
         </form>
       </div>
-      {username === name ? (
+      {user.name === poll.name ? (
         <div className="edit-bar">
           <button>
             {' '}
-            <Link to={`/poll/edit/${id}`}>Edit Poll</Link>
+            <Link to={`/poll/edit/${poll.id}`}>Edit Poll</Link>
           </button>
           <button onClick={handleDelete}>Delete Poll</button>
         </div>
       ) : null}
       <ShowComments
-        idComment={id}
-        username={username}
-        token={token}
-        email={email}
+        idComment={poll.id}
+        username={user.name}
+        token={user.token}
+        email={user.email}
       />
     </div>
   );

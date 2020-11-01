@@ -1,5 +1,5 @@
 import React from 'react';
-import ShowAllPolls from '../components/ShowAllPolls.js';
+import ShowAllPolls from '../../components/poll/ShowAllPolls.js';
 
 const Wall = ({ token, name, email }) => {
   return (

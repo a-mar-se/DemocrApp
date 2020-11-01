@@ -42,6 +42,7 @@ dbRouter.get('/comments-by-id/:id', listComments);
 dbRouter.get('/poll/:id', listSinglePoll);
 // dbRouter.get('/vote/poll/:id', authorizeVote, giveVote);
 dbRouter.get('/randompoll', listRandomPoll);
+dbRouter.put('/poll/like/:id', editPoll);
 dbRouter.put('/poll/edit/:id', authorizePoll, editPoll);
 dbRouter.delete('/poll/delete/:id', deletePoll);
 

@@ -106,13 +106,15 @@ export const getPollById = async (id) => {
     throw new Error(error);
   }
 };
-export const getRandomPoll = async (id) => {
+export const getRandomPoll = async () => {
   try {
-    const all = await Content.find();
+    const all = await Content.find({ typeContent: 'poll' });
     const N = all.length;
     console.log(N);
     const randomPoll = Math.floor(Math.random() * N);
-    const polli = await Content.find(id).limit(1).skip(randomPoll);
+    const polli = await Content.find({ typeContent: 'poll' })
+      .limit(1)
+      .skip(randomPoll);
     return polli[0];
   } catch (error) {
     throw new Error(error);

@@ -2,8 +2,6 @@ import React from 'react';
 import ClickablePerson from '../components/ClickablePerson.js';
 
 class Index extends React.Component {
-  // Get resources
-
   state = {
     data: [],
   };

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import ShowComments from './ShowComments.js';
+import TimeAgo from './TimeAgo.js';
 
 const Comment = ({
   parentId,
@@ -9,16 +9,14 @@ const Comment = ({
   nagainst,
   nfavor,
   name,
+  createdAt,
   id,
 }) => {
-  const [newComment, setNewComment] = useState('');
-
   return (
     <div className="comment poll-section ">
       <Link to={`/user/${authorId}`}>{name}</Link>
       <div> {content}</div>
-      {/* <div> {id}</div>
-      <div> {parentId}</div> */}
+      <TimeAgo createdAt={createdAt} />
     </div>
   );
 };

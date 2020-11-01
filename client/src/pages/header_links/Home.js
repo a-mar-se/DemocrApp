@@ -1,7 +1,7 @@
 import React from 'react';
-import YourPolls from '../components/YourPolls.js';
-import NewUser from './NewUser.js';
-import RandomPoll from '../components/RandomPoll.js';
+import YourPolls from '../../components/poll/YourPolls.js';
+import NewUser from '../../components/user_info/NewUser.js';
+import RandomPoll from '../../components/poll/RandomPoll.js';
 
 const Home = ({ name, token, email, id }) => {
   return (

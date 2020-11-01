@@ -1,19 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import LogIn from './LogIn.js';
-import LogInfo from './LogInfo.js';
-import variables from '../styles/_variables.scss';
+import LogInfo from '../user_info/LogInfo.js';
 
 const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
   const changeSearch = () => {
     console.log('typing');
   };
-  const changeColor1 = (event) => {
-    console.log('color changed');
-    console.log(event.target.value);
-    document.style.setProperty('--color1', event.target.value);
-    // variables.color1 = event.target.value;
-  };
+  // const changeColor1 = (event) => {
+  //   console.log('color changed');
+  //   console.log(event.target.value);
+  //   document.style.setProperty('--color1', event.target.value);
+  //   // variables.color1 = event.target.value;
+  // };
 
   return (
     <header>

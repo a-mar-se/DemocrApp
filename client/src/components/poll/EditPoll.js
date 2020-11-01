@@ -3,16 +3,9 @@ import { useParams } from 'react-router-dom';
 
 const EditPoll = ({ token, email, name }) => {
   const { id } = useParams();
-  // state = { pollData: {}}
 
   const [content, setContent] = useState('');
-  // const [pollData, setPollData] = useState('');
   const [title, setTitle] = useState('');
-
-  // const handleComment = (event) => {
-  //   event.currentTarget.value = '';
-  //   setContent('');
-  // };
 
   const postEditedPoll = async (event) => {
     event.preventDefault();

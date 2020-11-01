@@ -1,13 +1,9 @@
 import React from 'react';
 import Poll from './Poll.js';
 
-// const url = 'http://localhost:5000/all';
 class ShowAllPolls extends React.Component {
-  // Get resources
-
   state = {
     data: [],
-    changingPoll: false,
   };
   async componentDidMount() {
     await this.refreshPolls();
@@ -25,19 +21,25 @@ class ShowAllPolls extends React.Component {
         {this.state.data.map((poll, i) => {
           return (
             <Poll
+              user={this.props}
               username={this.props.name}
+              token={this.props.token}
+              email={this.props.email}
+              poll={poll}
               name={poll.name}
               content={poll.content}
               key={i}
               nagainst={poll.nagainst}
+              favor={poll.favor}
+              against={poll.against}
+              nagainst={poll.nagainst}
               nfavor={poll.nfavor}
               id={poll._id}
-              token={this.props.token}
-              email={this.props.email}
               title={poll.title}
               comments={poll.comments}
               authorId={poll.authorId}
               refreshPolls={this.refreshPolls}
+              createdAt={poll.createdAt}
             />
           );
         })}

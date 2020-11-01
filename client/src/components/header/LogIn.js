@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import tryLogIn from '../functions/tryLogIn.js';
+import tryLogIn from '../../functions/tryLogIn.js';
 
 const LogIn = ({ handleLogIn }) => {
-  // const [token, setToken] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newEmail, setNewEmail] = useState('');
 

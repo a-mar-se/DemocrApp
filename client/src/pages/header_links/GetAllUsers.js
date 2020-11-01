@@ -1,5 +1,5 @@
 import React from 'react';
-import Person from '../components/Person.js';
+import Person from '../../components/user_info/Person.js';
 
 // const url = 'http://localhost:5000/all';
 class GetAllUsers extends React.Component {
