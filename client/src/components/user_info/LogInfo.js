@@ -5,9 +5,7 @@ class LogInfo extends React.Component {
     return (
       <div>
         {this.props.token !== '' ? (
-          <div>
-            Hello {this.props.email}, with email: {this.props.name}
-          </div>
+          <div>Hello {this.props.token}</div>
         ) : (
           <div></div>
         )}

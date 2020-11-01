@@ -1,5 +1,5 @@
 import React from 'react';
-import NewPoll from './NewPoll.js';
+import NewPoll from '../poll/NewPoll.js';
 
 const YourPolls = ({ name, id }) => {
   return (

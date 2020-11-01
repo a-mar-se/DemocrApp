@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import ShowComments from './ShowComments.js';
-import TimeAgo from './TimeAgo.js';
-import ReactionBar from './ReactionBar.js';
+import ShowComments from '../poll/ShowComments.js';
+import TimeAgo from '../poll/TimeAgo.js';
+import ReactionBar from '../poll/ReactionBar.js';
+import EditBar from '../poll/EditBar.js';
 
-const Poll = ({ user, poll, refreshPolls }) => {
+const Poll = ({ name, token, email, id, poll }) => {
   const [newComment, setNewComment] = useState('');
   const handleReactToPoll = async () => {
-    if (user.token !== '') {
+    if (token !== '') {
     } else {
       alert('You need to log in to react to polls');
     }
@@ -18,7 +19,7 @@ const Poll = ({ user, poll, refreshPolls }) => {
     const response = await fetch(`/new-comment/`, {
       method: 'POST',
       body: JSON.stringify({
-        name: user.name,
+        name: name,
         authorId: poll.authorId,
         parentId: poll.id,
         content: newComment,
@@ -40,30 +41,6 @@ const Poll = ({ user, poll, refreshPolls }) => {
     // const contentObject = document.getElementById('comment-content');
     // contentObject.value = '';
   };
-  // const handleEdit = () => {
-  //   handleReactToPoll();
-  // };
-  const handleDelete = async () => {
-    // console.log(res);
-    window.confirm('Are you sure you want to delete this poll?');
-    const res = await fetch(`/poll/delete/${poll.id}`, {
-      method: 'DELETE',
-      body: JSON.stringify({ _id: poll.id, name: user.name }),
-      headers: {
-        'Content-Type': 'application/json',
-        token: user.token,
-        email: user.email,
-      },
-    });
-    if (res.status === 200) {
-      console.log('Poll sucessfully deleted');
-      refreshPolls();
-    } else {
-      alert('Problem verifying identity.');
-    }
-
-    // window.location.href('/');
-  };
 
   const handleChangeComment = (event) => {
     const { value } = event.currentTarget;
@@ -71,7 +48,7 @@ const Poll = ({ user, poll, refreshPolls }) => {
   };
 
   const handleComment = (event) => {
-    if (user.token !== '') {
+    if (token !== '') {
       handleChangeComment(event);
     } else {
       event.currentTarget.value = '';
@@ -92,17 +69,7 @@ const Poll = ({ user, poll, refreshPolls }) => {
       </div>
       <div className="pollcontent"> {poll.content}</div>
 
-      <ReactionBar
-        poll={poll}
-        user={user}
-        token={user.token}
-        // id={id}
-        // nfavorPast={nfavor}
-        // favorPast={favor}
-        // againstPast={against}
-        // nagainstPast={nagainst}
-        // userId={id}
-      />
+      <ReactionBar poll={poll} token={token} />
 
       <div>
         <form className="writeComment" onSubmit={postNewComment}>
@@ -115,20 +82,13 @@ const Poll = ({ user, poll, refreshPolls }) => {
           <button type="submit">Comment</button>
         </form>
       </div>
-      {user.name === poll.name ? (
-        <div className="edit-bar">
-          <button>
-            {' '}
-            <Link to={`/poll/edit/${poll.id}`}>Edit Poll</Link>
-          </button>
-          <button onClick={handleDelete}>Delete Poll</button>
-        </div>
-      ) : null}
+      <EditBar poll={poll} />
+
       <ShowComments
-        idComment={poll.id}
-        username={user.name}
-        token={user.token}
-        email={user.email}
+        idComment={poll._id}
+        username={name}
+        token={token}
+        email={email}
       />
     </div>
   );

@@ -1,18 +1,18 @@
 import React from 'react';
-import YourPolls from '../../components/poll/YourPolls.js';
+import YourPolls from '../../components/sections/YourPolls.js';
 import NewUser from '../../components/user_info/NewUser.js';
 import RandomPoll from '../../components/poll/RandomPoll.js';
 
 const Home = ({ name, token, email, id }) => {
   return (
-    <div className="page home">
-      <RandomPoll token={token} email={email} username={name} />
+    <main className="page home">
+      <RandomPoll name={name} token={token} email={email} id={id} />
       {token === '' ? (
         <NewUser />
       ) : (
         <YourPolls name={name} token={token} email={email} id={id} />
       )}
-    </div>
+    </main>
   );
 };
 

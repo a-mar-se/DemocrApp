@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Auth from '../auth.js';
 
 const EditUser = ({ token, email }) => {
   const { id } = useParams();
@@ -7,10 +8,9 @@ const EditUser = ({ token, email }) => {
   const [person, setPerson] = useState({});
 
   const fetchStudent = async (id) => {
-    const response = await fetch(`/user/${id}`);
+    const response = await fetch(`/user/${id}`, {});
     const personData = await response.json();
     setPerson(personData);
-    // console.log({ person });
   };
 
   const [newName, setNewName] = useState('');
@@ -38,8 +38,10 @@ const EditUser = ({ token, email }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch(`/edit/${person._id}`, {
+    const response = await fetch(`/edit/${id}`, {
       method: 'PUT',
+
+      headers: { Authorization: `Bearer ${Auth.getToken()}` },
       body: JSON.stringify({
         name: newName,
         email: newEmail,
@@ -47,8 +49,7 @@ const EditUser = ({ token, email }) => {
       }),
       headers: {
         'Content-Type': 'application/json',
-        email: email,
-        token: token,
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
     });
     if (response.status === 200) {

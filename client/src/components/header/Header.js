@@ -49,10 +49,6 @@ const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
         </li>
       </ul>
       <h1>DemocrApp</h1>
-      {/* <div>
-        <input type="color" onChange={changeColor1} />
-        <input type="color" onChange={changeColor1} />
-      </div> */}
       <div className="loggedIn">
         {token !== '' ? (
           <LogInfo name={name} email={email} token={token} />

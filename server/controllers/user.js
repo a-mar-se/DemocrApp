@@ -39,11 +39,14 @@ export const signIn = async (request, response, next) => {
     if (request.body.password != user.password) {
       return response.status(420).send('Incorrect email or password.');
     } else {
-      const token = jwt.sign({ email: request.body.email }, 'Token', {
-        expiresIn: 60 * 60,
-      });
-      // response.setHeader('authorization');
-      // return response.status(200).send(token);
+      const payload = { sub: user._id };
+      const secret = 'something really secret';
+      const options = { expiresIn: '1hr' };
+      const token = jwt.sign(payload, secret, options);
+
+      // const token = jwt.sign({ email: request.body.email }, 'Token', {
+      //   expiresIn: 60 * 60,
+      // });
 
       response.setHeader('Token', token);
       response.status(200).json({
@@ -132,4 +135,28 @@ export const listPerson = async (request, response, next) => {
       message: 'Error: Profile not found.',
     });
   }
+};
+
+export const listUserData = async (req, res, next) => {
+  if (!req.headers.authorization)
+    return res.status(401).json({ message: 'Not logged in' });
+  const token = req.headers.authorization.replace('Bearer ', '');
+  new Promise((resolve, reject) => {
+    const secret = 'something really secret';
+    jwt.verify(token, secret, (err, payload) => {
+      if (err) return reject(err);
+      return resolve(payload);
+    });
+  })
+    .then((payload) => {
+      return User.findById(payload.sub);
+      // console.log(user);
+    })
+    // find the user by the user ID in the payload
+    .then((user) => {
+      if (!user) return res.status(402).json({ message: 'User doesn´t exist' });
+      req.currentUser = user;
+      return res.status(200).send(user);
+    })
+    .catch(next);
 };

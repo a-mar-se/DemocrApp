@@ -5,8 +5,16 @@ import { User } from '../models/user.js';
 export const authorize = async (req, res, next) => {
   try {
     const email = await req.headers.email;
+    const payload = await req.headers._id;
     const token = await req.headers.token;
-    const decoded = jwt.verify(token, 'Token');
+
+    const secret = 'something really secret';
+    const decoded = jwt.verify(token, secret, (err, payload) => {
+      if (err) {
+        console.log(token, payload);
+      }
+    });
+    // const decoded = jwt.verify(token, 'Token');
     console.log(decoded.email); // bar
     console.log(token);
     if (decoded.email === email) {

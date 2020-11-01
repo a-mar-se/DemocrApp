@@ -6,9 +6,7 @@ const ShowComments = ({ idComment, token, username, email }) => {
 
   useEffect(() => {
     const start = async () => {
-      console.log(idComment);
       const res = await fetch(`/comments-by-id/${idComment}`);
-      console.log(res);
       const data = await res.json();
       return setNewComment(data);
     };
@@ -18,23 +16,7 @@ const ShowComments = ({ idComment, token, username, email }) => {
   return (
     <div className="">
       {comments.map((comment, i) => {
-        return (
-          <>
-            <Comment
-              token={token}
-              email={email}
-              name={comment.name}
-              content={comment.content}
-              nagainst={comment.nagainst}
-              nfavor={comment.nfavor}
-              id={comment._id}
-              authorId={comment.authorId}
-              parentId={comment.parentId}
-              key={i}
-              createdAt={comment.createdAt}
-            />
-          </>
-        );
+        return <Comment comment={comment} key={i} />;
       })}
     </div>
   );

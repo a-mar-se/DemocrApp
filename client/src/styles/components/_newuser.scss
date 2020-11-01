@@ -26,6 +26,12 @@
   .intro {
     padding: 10px;
   }
+  button {
+    background-color: $color2;
+    &:hover {
+      background-color: white;
+    }
+  }
 }
 
 .logo {

@@ -1,36 +1,29 @@
-import React from 'react';
-import Poll from './Poll.js';
+import React, { useState, useEffect } from 'react';
+import Poll from '../sections/Poll.js';
 
-class RandomPoll extends React.Component {
-  state = { data: {} };
+const RandomPoll = ({ name, token, email, id }) => {
+  const [poll, setPoll] = useState([]);
 
-  componentDidMount() {
-    this.refreshPolls();
-  }
+  // componentDidMount() {
+  //   this.refreshPolls();
+  // }
 
-  refreshPolls = async () => {
-    const res = await fetch(`/randompoll`);
-    const data = await res.json();
-    this.setState({ data });
-  };
+  // refreshPolls = async () => {
+  //   const data = await res.json();
+  //   console.log(data);
+  //   this.setState({ poll: data });
+  // };
 
-  render() {
-    return (
-      <Poll
-        username={this.props.name}
-        name={this.state.data.name}
-        content={this.state.data.content}
-        nagainst={this.state.data.nagainst}
-        nfavor={this.state.data.nfavor}
-        id={this.state.data._id}
-        token={this.props.token}
-        email={this.props.email}
-        title={this.state.data.title}
-        comments={this.state.data.comments}
-        authorId={this.state.data.authorId}
-        createdAt={this.state.data.createdAt}
-      />
-    );
-  }
-}
+  useEffect(() => {
+    const start = async () => {
+      const res = await fetch(`/randompoll`);
+      const data = await res.json();
+      return setPoll(data);
+    };
+    start();
+  }, []);
+
+  return <Poll name={name} token={token} email={email} id={id} poll={poll} />;
+};
+
 export default RandomPoll;

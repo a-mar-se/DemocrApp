@@ -2,21 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import TimeAgo from './TimeAgo.js';
 
-const Comment = ({
-  parentId,
-  authorId,
-  content,
-  nagainst,
-  nfavor,
-  name,
-  createdAt,
-  id,
-}) => {
+const Comment = ({ comment }) => {
   return (
     <div className="comment poll-section ">
-      <Link to={`/user/${authorId}`}>{name}</Link>
-      <div> {content}</div>
-      <TimeAgo createdAt={createdAt} />
+      <Link to={`/user/${comment.authorId}`}>{comment.name}</Link>
+      <div> {comment.content}</div>
+      <TimeAgo createdAt={comment.createdAt} />
     </div>
   );
 };

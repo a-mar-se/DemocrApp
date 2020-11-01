@@ -31,7 +31,8 @@ server.use(bodyParser.json());
 server.use(httpLoggerMiddleware);
 // Utiliza un middleware que permite crear headers de respuesta que indiquen que el contenido es JSON
 server.use(jsonResponseMiddleware);
-// server.use(authorize);
+
+// server.use(secureRoute);
 // Database router
 server.use(dbRouter);
 
