@@ -58,7 +58,7 @@ export const getAll = async () => {
 };
 export const getAllPolls = async () => {
   try {
-    const res = await Content.find({ typeContent: 'poll' });
+    const res = await Content.find({ typeContent: 'poll' }).sort({ _id: -1 });
     console.log(res);
     return res;
   } catch (error) {
