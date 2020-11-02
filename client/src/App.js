@@ -14,34 +14,22 @@ import Wall from './pages/header_links/Wall.js';
 import Auth from './components/auth.js';
 
 const App = () => {
-  const [token, setToken] = useState('');
   const [email, setNewEmail] = useState();
   const [name, setNewName] = useState();
   const [id, setNewId] = useState();
-  // const [user, setNewUser] = useState({});
 
   const logOut = async () => {
     console.log('User has logged out!');
-    setToken('');
     setNewId('');
     setNewName('');
     setNewEmail('');
     Auth.logout();
   };
 
-  const handleLogIn = async (ttoken, idd, emaill, namee, userr) => {
-    setToken(ttoken);
+  const handleLogIn = async (idd, emaill, namee) => {
     setNewId(idd);
     setNewEmail(emaill);
     setNewName(namee);
-
-    // setNewUser({
-    //   token: ttoken,
-    //   id: idd,
-    //   email: emaill,
-    //   name: namee,
-    //   user: userr,
-    // });
   };
 
   const checkIfLogged = async () => {
@@ -55,11 +43,13 @@ const App = () => {
         return personData;
       };
       const activeUser = await fetchUser();
-      if (activeUser.status === 200) {
+      if (activeUser) {
         setNewId(activeUser._id);
-        console.log(id);
         setNewEmail(activeUser.email);
         setNewName(activeUser.name);
+        console.log(`Authenticated as ${activeUser.name}`);
+      } else {
+        console.log('something is wrong getting the user data');
       }
     }
   };

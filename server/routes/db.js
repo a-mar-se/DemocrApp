@@ -10,6 +10,7 @@ import {
   listPerson,
   listUserData,
   deleteAll,
+  listElements,
 } from '../controllers/user.js';
 
 import {
@@ -41,6 +42,8 @@ dbRouter.get('/allm', listAll);
 dbRouter.get('/comments-by-id/:id', listComments);
 dbRouter.get('/poll/:id', listSinglePoll);
 dbRouter.get('/randompoll', listRandomPoll);
+
+dbRouter.post('/find-elements', listElements);
 
 dbRouter.post('/user-data', secureRoute, listUserData);
 dbRouter.post('/new-poll', secureRoute, createNewPoll);

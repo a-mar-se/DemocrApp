@@ -4,8 +4,9 @@ import ShowComments from '../poll/ShowComments.js';
 import TimeAgo from '../poll/TimeAgo.js';
 import ReactionBar from '../poll/ReactionBar.js';
 import EditBar from '../poll/EditBar.js';
+import Auth from '../auth.js';
 
-const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
+const Poll = ({ name, email, id, poll, refreshPolls }) => {
   const [newComment, setNewComment] = useState('');
   const [comments, setComments] = useState([]);
 
@@ -22,7 +23,7 @@ const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
   }, []);
 
   const handleReactToPoll = async () => {
-    if (token !== '') {
+    if (Auth.isAuthenticated()) {
     } else {
       alert('You need to log in to react to polls');
     }
@@ -30,8 +31,6 @@ const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
 
   const postNewComment = async (event) => {
     event.preventDefault();
-    console.log('new commmen');
-    console.log(token);
     const response = await fetch(`/new-comment`, {
       method: 'POST',
       body: JSON.stringify({
@@ -42,7 +41,7 @@ const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
       }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
     });
 
@@ -65,7 +64,7 @@ const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
   };
 
   const handleComment = (event) => {
-    if (token !== '') {
+    if (Auth.isAuthenticated() !== '') {
       handleChangeComment(event);
     } else {
       event.currentTarget.value = '';
@@ -93,7 +92,7 @@ const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
       </div>
       <div className="pollcontent"> {poll.content}</div>
 
-      <ReactionBar poll={poll} token={token} />
+      <ReactionBar poll={poll} />
 
       <div>
         <form className="writeComment" onSubmit={postNewComment}>
@@ -110,7 +109,6 @@ const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
       <EditBar
         poll={poll}
         name={name}
-        token={token}
         start={start}
         refreshPolls={refreshPolls}
       />
@@ -119,7 +117,6 @@ const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
         comments={comments}
         idComment={poll._id}
         username={name}
-        token={token}
         email={email}
       />
     </div>

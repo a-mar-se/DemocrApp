@@ -5,7 +5,6 @@ class LogInfo extends React.Component {
     return (
       <div>
         <div>Hello {this.props.name}</div>
-        <div>Id {this.props.id}</div>
       </div>
     );
   }

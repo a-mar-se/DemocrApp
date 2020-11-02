@@ -1,4 +1,6 @@
 // import { response } from 'express';
+// import { response } from 'express';
+// import { response } from 'express';
 import mongoose from 'mongoose';
 import { Content } from './polls.js';
 
@@ -19,7 +21,12 @@ export const User = mongoose.model('User', userSchema);
 
 export const createUserResource = async (data) => {
   try {
-    return await User.create({ ...data });
+    const isThereData = await User.find({ name: data.name });
+    // console.log(isThereData);
+    if (isThereData !== []) return await User.create({ ...data });
+    else {
+      return 'Username already in use';
+    }
   } catch (error) {
     throw new Error(error);
   }
@@ -82,6 +89,26 @@ export const sendDeletePetitionAll = async (id) => {
 export const getUserById = async (id) => {
   try {
     return await User.findById(id);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const getElementsByKeyword = async (keyword) => {
+  try {
+    // const funf = async (keywordd) => {
+    //   const users = await User.find({ name: keywordd });
+
+    //   // const emails = await User.find({ email: keyword });
+
+    //   // console.log([...users, ...emails]);
+    //   // return [...users, ...emails];
+    //   return users;
+    // };
+    return await User.find({ name: { $regex: `.*${keyword}.*` } });
+    // const results = await User.find({ name: keywordd });
+    // console.log(results);
+    // return results;
   } catch (error) {
     throw new Error(error);
   }

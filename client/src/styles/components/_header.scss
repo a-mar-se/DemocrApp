@@ -2,24 +2,31 @@
 header {
   width: 100vw;
   top: 0;
+  // height: 100px;
   position: fixed;
   background-color: $color1;
   display: flex;
   flex-direction: row;
   margin: 0%;
   justify-content: space-between;
+  * {
+    // border: solid;
+  }
   ul {
     display: flex;
     // justify-content: space-between;
     flex-direction: row;
     justify-content: space-betweeen;
     padding: 0;
+
     li {
       padding: 0;
       list-style-type: none;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      min-width: 150px;
+
       input {
         background-color: $color2;
         &:hover {
@@ -39,17 +46,19 @@ header {
 
     // justify-content: flex-end;
   }
+
   .loggedIn {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-
+    // border: solid;
     form,
     div {
       display: flex;
       flex-direction: horizontal;
-      padding: 10px;
-      div {
+      // padding: 10px;
+      div,
+      .linky {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -66,10 +75,41 @@ header {
       }
     }
   }
-
-  h1 {
+  .logoHeader {
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+}
+
+.search-results {
+  position: fixed;
+  left: 30vw;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: no-wrap;
+  input {
+    // align-self: center;
+    padding: 10px;
+    background-color: $color2;
+    align-content: center;
+    &:hover {
+      background-color: white;
+    }
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    * {
+      margin: 0;
+      padding: 10px;
+    }
+    background-color: $color2;
+    &:hover {
+      cursor: pointer;
+
+      background-color: $color1;
+    }
   }
 }

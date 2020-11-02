@@ -16,17 +16,20 @@ class GetAllUsers extends React.Component {
 
   render() {
     return (
-      <div className="page allusers">
-        {this.state.data.map((person, i) => {
-          return (
-            <Person
-              name={person.name}
-              password={person.password}
-              key={i}
-              id={person._id}
-            />
-          );
-        })}
+      <div className="page">
+        <div className="allusers">
+          {this.state.data.map((person, i) => {
+            return (
+              <Person
+                name={person.name}
+                password={person.password}
+                key={i}
+                email={person.email}
+                id={person._id}
+              />
+            );
+          })}
+        </div>
       </div>
     );
   }

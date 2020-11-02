@@ -9,6 +9,7 @@ import {
   sendDeletePetition,
   sendDeletePetitionAll,
   getUserById,
+  getElementsByKeyword,
 } from '../models/user.js';
 import logger from '../lib/logger.js';
 
@@ -18,7 +19,7 @@ export const createNewUser = async (request, response) => {
     const newData = await createUserResource(body);
     return response.status(201).send(newData);
   } catch (error) {
-    return response.status(500).send({
+    return response.send({
       message: `Error: not connection to database, ${error}.`,
     });
   }
@@ -179,5 +180,17 @@ export const deleteAll = async (request, response, next) => {
     }
   } catch (err) {
     return await response.send(err);
+  }
+};
+
+export const listElements = async (request, response, next) => {
+  const dataResource = await getElementsByKeyword(request.body.keyword);
+  console.log(dataResource);
+  if (dataResource) {
+    return response.status(200).send(dataResource);
+  } else {
+    return response.status(404).send({
+      message: 'Error: No user found with that name.',
+    });
   }
 };

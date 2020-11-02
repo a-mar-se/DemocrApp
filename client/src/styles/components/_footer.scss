@@ -1,6 +1,7 @@
 @import 'variables';
 footer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding: 10px;
   background-color: $color1;

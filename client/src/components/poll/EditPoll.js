@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-const EditPoll = ({ token, email, name }) => {
+import Auth from '../auth.js';
+
+const EditPoll = ({ email, name }) => {
   const { id } = useParams();
 
   const [content, setContent] = useState('');
@@ -16,7 +18,7 @@ const EditPoll = ({ token, email, name }) => {
       }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
     });
 
@@ -58,7 +60,7 @@ const EditPoll = ({ token, email, name }) => {
 
   return (
     <div>
-      {token !== '' ? (
+      {Auth.isAuthenticated() ? (
         <form className="poll" onSubmit={postEditedPoll}>
           <div>
             <label htmlFor="name">Edit your proposition:</label>

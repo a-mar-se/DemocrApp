@@ -23,6 +23,7 @@ export const Content = mongoose.model('Content', PollSchema);
 
 export const createPollResource = async (data) => {
   console.log(data);
+  console.log(data);
   try {
     return await Content.create({
       ...data,

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Poll from './Poll.js';
 import NewPoll from '../poll/NewPoll.js';
+import Auth from '../auth.js';
 
-const ShowAllPolls = ({ name, id, email, token }) => {
+const ShowAllPolls = ({ name, id, email }) => {
   const [polls, setPolls] = useState([]);
 
   const refreshPolls = async () => {
@@ -16,11 +17,12 @@ const ShowAllPolls = ({ name, id, email, token }) => {
 
   return (
     <div className="allpolls">
-      <NewPoll />
+      {Auth.isAuthenticated() ? (
+        <NewPoll id={id} name={name} refreshPolls={refreshPolls} />
+      ) : null}
       {polls.map((poll, i) => {
         return (
           <Poll
-            token={token}
             name={name}
             email={email}
             id={id}

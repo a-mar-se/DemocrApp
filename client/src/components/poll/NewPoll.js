@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Auth from '../auth.js';
-const NewPoll = ({ name, token, email, id }) => {
+const NewPoll = ({ name, email, id, refreshPolls }) => {
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
 
@@ -13,6 +13,7 @@ const NewPoll = ({ name, token, email, id }) => {
         authorId: id,
         title: title,
         content: content,
+        typeContent: 'poll',
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -25,13 +26,13 @@ const NewPoll = ({ name, token, email, id }) => {
 
     if (response.status === 200) {
       alert('Poll sucessfully created!');
-      console.log('Profile sucessfully edited!');
-
+      console.log('Poll sucessfully created!');
+      refreshPolls();
       // window.location.href = '/users';
     } else {
       console.log('Error trying to post a poll');
     }
-    console.log('New poll added!');
+    // console.log('New poll added!');
     const titleObject = document.getElementById('title');
     const contentObject = document.getElementById('poll-content');
     contentObject.value = '';
@@ -49,7 +50,7 @@ const NewPoll = ({ name, token, email, id }) => {
 
   return (
     <div>
-      {token !== '' ? (
+      {Auth.getToken() ? (
         <form className="poll" onSubmit={postNewPoll}>
           <div>
             {' '}
