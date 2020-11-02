@@ -7,6 +7,7 @@ function secureRoute(req, res, next) {
   if (!req.headers.authorization)
     return res.status(401).json({ message: 'Unauthorized' });
   const token = req.headers.authorization.replace('Bearer ', '');
+  // console.log(token);
   new Promise((resolve, reject) => {
     const secret = 'something really secret';
     jwt.verify(token, secret, (err, payload) => {

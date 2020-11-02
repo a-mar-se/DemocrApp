@@ -97,7 +97,9 @@ const App = () => {
           />
           <Route
             path="/wall"
-            render={() => <Wall token={token} name={name} email={email} />}
+            render={() => (
+              <Wall token={token} name={name} email={email} id={id} />
+            )}
           />
           <Route path="/*" component={Error} />
         </Switch>

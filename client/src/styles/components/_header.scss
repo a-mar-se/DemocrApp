@@ -15,25 +15,55 @@ header {
     justify-content: space-betweeen;
     padding: 0;
     li {
+      padding: 0;
       list-style-type: none;
-      padding: 10px;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
       input {
-        background-color: white;
+        background-color: $color2;
+        &:hover {
+          background-color: white;
+        }
       }
       * {
-        background-color: $color2;
         padding: 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        button {
+          background-color: $color2;
+        }
       }
     }
 
-    .loggedIn {
+    // justify-content: flex-end;
+  }
+  .loggedIn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    form,
+    div {
       display: flex;
-      flex-direction: row;
-      // justify-content: flex-end;
+      flex-direction: horizontal;
+      padding: 10px;
+      div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      input,
+      button {
+        margin: 10px;
+        padding: 10px;
+        min-width: 150px;
+        background-color: $color2;
+        &:hover {
+          background-color: white;
+        }
+      }
     }
   }
 
@@ -41,22 +71,5 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-  form {
-    display: flex;
-    flex-direction: horizontal;
-    p,
-    button {
-      min-width: 150px;
-      display: flex;
-      flex-direction: column;
-      button {
-        background-color: $color2;
-      }
-      * {
-        margin: 10px;
-        padding: 10px;
-      }
-    }
   }
 }

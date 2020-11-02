@@ -29,24 +29,26 @@ import secureRoute from '../middleware/secureRoute.js';
 const dbRouter = express.Router();
 
 dbRouter.post('/login', login);
-
-dbRouter.post('/user-data', listUserData);
 dbRouter.post('/newUser', createNewUser);
+
 dbRouter.get('/users', listAllUsers);
 dbRouter.get('/all', listData);
-dbRouter.get('/user/:id', listPerson); // Can I delete thiso ne?
-dbRouter.put('/edit/:id', authorize, editPerson2);
-dbRouter.delete('/delete/:id', authorize, deletePerson);
+dbRouter.get('/user/:id', listPerson);
 
-dbRouter.post('/new-poll', createNewPoll);
-dbRouter.post('/new-comment', createNewComment);
 dbRouter.get('/polls', listAllPolls);
 dbRouter.get('/allm', listAll);
 dbRouter.get('/comments-by-id/:id', listComments);
 dbRouter.get('/poll/:id', listSinglePoll);
 dbRouter.get('/randompoll', listRandomPoll);
+
+dbRouter.post('/user-data', secureRoute, listUserData);
+dbRouter.post('/new-poll', secureRoute, createNewPoll);
+dbRouter.post('/new-comment', secureRoute, createNewComment);
 dbRouter.put('/poll/like/:id', secureRoute, editPoll);
-dbRouter.put('/poll/edit/:id', authorizePoll, editPoll);
-dbRouter.delete('/poll/delete/:id', deletePoll);
+
+dbRouter.delete('/delete/:id', secureRoute, authorize, deletePerson);
+dbRouter.put('/edit/:id', secureRoute, authorize, editPerson2);
+dbRouter.delete('/poll/delete/:id', secureRoute, authorize, deletePoll);
+dbRouter.put('/poll/edit/:id', secureRoute, authorize, editPoll);
 
 export default dbRouter;

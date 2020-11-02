@@ -1,19 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-const EditBar = ({ token, email, name, poll }) => {
+import Auth from '../auth.js';
+const EditBar = ({ token, email, name, poll, refreshPolls }) => {
   const handleDelete = async () => {
     window.confirm('Are you sure you want to delete this poll?');
-    const res = await fetch(`/poll/delete/${poll.id}`, {
+    const res = await fetch(`/poll/delete/${poll._id}`, {
       method: 'DELETE',
-      body: JSON.stringify({ _id: poll.id, name: name }),
       headers: {
         'Content-Type': 'application/json',
-        token: token,
-        email: email,
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
     });
     if (res.status === 200) {
+      refreshPolls();
       console.log('Poll sucessfully deleted');
     } else {
       alert('Problem verifying identity.');
@@ -25,11 +24,15 @@ const EditBar = ({ token, email, name, poll }) => {
         <div className="edit-bar">
           <button>
             {' '}
-            <Link to={`/poll/edit/${poll.id}`}>Edit Poll</Link>
+            <Link to={`/poll/edit/${poll._id}`}>Edit Poll</Link>
           </button>
           <button onClick={handleDelete}>Delete Poll</button>
         </div>
-      ) : null}{' '}
+      ) : null}
+      <>
+        hkj {name}
+        {name} {poll.name}
+      </>
     </>
   );
 };

@@ -46,7 +46,6 @@ export const createCommentResource = async (data) => {
     });
     console.log(psps);
   } catch (error) {
-    // console.log('jsssssssssjajaja');
     throw new Error(error);
   }
 };
@@ -59,11 +58,14 @@ export const getAll = async () => {
 };
 export const getAllPolls = async () => {
   try {
-    return await Content.find({ typeContent: 'poll' });
+    const res = await Content.find({ typeContent: 'poll' });
+    console.log(res);
+    return res;
   } catch (error) {
     throw new Error(error);
   }
 };
+
 export const getComments = async (id) => {
   try {
     return await Content.find({ typeContent: 'comment', parentId: id });

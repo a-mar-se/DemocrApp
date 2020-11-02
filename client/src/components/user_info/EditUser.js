@@ -41,7 +41,6 @@ const EditUser = ({ token, email }) => {
     const response = await fetch(`/edit/${id}`, {
       method: 'PUT',
 
-      headers: { Authorization: `Bearer ${Auth.getToken()}` },
       body: JSON.stringify({
         name: newName,
         email: newEmail,

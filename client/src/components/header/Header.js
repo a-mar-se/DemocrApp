@@ -19,26 +19,21 @@ const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
       <ul id="nav">
         <li>
           <Link className="hidden" to="/">
-            Home
+            <button>Home</button>
           </Link>
         </li>
 
         <li>
-          <Link to="/users">All Users</Link>
+          <Link to="/users">
+            <button>All Users</button>
+          </Link>
         </li>
 
         <li>
-          <Link to="/wall">All Polls</Link>
+          <Link to="/wall">
+            <button>All Polls</button>
+          </Link>
         </li>
-
-        {token !== '' ? (
-          <li>
-            {' '}
-            <Link to={`/profile/${id}`}>Profile</Link>{' '}
-          </li>
-        ) : (
-          <></>
-        )}
 
         <li>
           <input
@@ -54,9 +49,15 @@ const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
           <LogInfo name={name} email={email} token={token} />
         ) : null}
         {token !== '' ? (
-          <Link to="/">
-            <button onClick={logOut}>Log Out</button>
-          </Link>
+          <div>
+            <Link to={`/profile/${id}`}>
+              <button>My Profile</button>
+            </Link>
+
+            <Link to="/">
+              <button onClick={logOut}>Log Out</button>
+            </Link>
+          </div>
         ) : (
           <LogIn handleLogIn={handleLogIn} />
         )}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
+import Auth from '../auth.js';
 const EditPoll = ({ token, email, name }) => {
   const { id } = useParams();
 
@@ -12,25 +12,18 @@ const EditPoll = ({ token, email, name }) => {
     const response = await fetch(`/poll/edit/${id}`, {
       method: 'PUT',
       body: JSON.stringify({
-        name: name,
         title: title,
         content: content,
       }),
       headers: {
         'Content-Type': 'application/json',
-        id: id,
-        email: email,
-        token: token,
+        Authorization: `Bearer ${token}`,
       },
     });
-
-    console.log(response);
 
     if (response.status === 200) {
       alert('Poll sucessfully edited!');
       console.log('Poll sucessfully edited!');
-
-      // window.location.href = '/users';
     } else {
       console.log('Error trying to edit poll');
     }

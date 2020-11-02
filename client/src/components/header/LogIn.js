@@ -29,27 +29,23 @@ const LogIn = ({ handleLogIn }) => {
 
   return (
     <form onSubmit={tryLogInFF}>
-      <p>
-        <input
-          id="email"
-          placeholder="Enter email..."
-          type="text"
-          required
-          onChange={handleChangeEmail}
-        />
-      </p>
-      <p>
-        <input
-          id="pass"
-          placeholder="Enter password..."
-          type="password"
-          required
-          onChange={handleChangePass}
-        />
-      </p>
-      <p>
-        <button type="submit">Log In</button>
-      </p>
+      <input
+        id="email"
+        placeholder="Enter email..."
+        type="text"
+        required
+        onChange={handleChangeEmail}
+      />
+
+      <input
+        id="pass"
+        placeholder="Enter password..."
+        type="password"
+        required
+        onChange={handleChangePass}
+      />
+
+      <button type="submit">Log In</button>
     </form>
   );
 };

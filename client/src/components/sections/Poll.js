@@ -5,7 +5,7 @@ import TimeAgo from '../poll/TimeAgo.js';
 import ReactionBar from '../poll/ReactionBar.js';
 import EditBar from '../poll/EditBar.js';
 
-const Poll = ({ name, token, email, id, poll }) => {
+const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
   const [newComment, setNewComment] = useState('');
   const handleReactToPoll = async () => {
     if (token !== '') {
@@ -26,6 +26,7 @@ const Poll = ({ name, token, email, id, poll }) => {
       }),
       headers: {
         'Content-Type': 'application/json',
+        Authorizarion: `Bearer ${token}`,
       },
     });
 
@@ -82,7 +83,12 @@ const Poll = ({ name, token, email, id, poll }) => {
           <button type="submit">Comment</button>
         </form>
       </div>
-      <EditBar poll={poll} />
+      <EditBar
+        poll={poll}
+        name={name}
+        token={token}
+        refreshPolls={refreshPolls}
+      />
 
       <ShowComments
         idComment={poll._id}

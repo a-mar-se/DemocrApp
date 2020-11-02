@@ -1,36 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Poll from './Poll.js';
+import NewPoll from '../poll/NewPoll.js';
 
-class ShowAllPolls extends React.Component {
-  state = {
-    data: [],
-  };
-  async componentDidMount() {
-    await this.refreshPolls();
-  }
+const ShowAllPolls = ({ name, id, email, token }) => {
+  const [polls, setPolls] = useState([]);
 
-  refreshPolls = async () => {
+  const refreshPolls = async () => {
     const res = await fetch(`/polls`);
     const data = await res.json();
-    this.setState({ data });
+    setPolls(data);
   };
+  useEffect(() => {
+    refreshPolls();
+  }, []);
 
-  render() {
-    return (
-      <div className="allpolls">
-        {this.state.data.map((poll, i) => {
-          return (
-            <Poll
-              user={this.props}
-              poll={poll}
-              key={i}
-              refreshPolls={this.refreshPolls}
-            />
-          );
-        })}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="allpolls">
+      {polls.map((poll, i) => {
+        return (
+          <Poll
+            token={token}
+            name={name}
+            email={email}
+            id={id}
+            poll={poll}
+            key={i}
+            refreshPolls={refreshPolls}
+          />
+        );
+      })}
+    </div>
+  );
+};
 
 export default ShowAllPolls;

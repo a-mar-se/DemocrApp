@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import Auth from '../auth.js';
 const NewPoll = ({ name, token, email, id }) => {
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
@@ -16,6 +16,8 @@ const NewPoll = ({ name, token, email, id }) => {
       }),
       headers: {
         'Content-Type': 'application/json',
+
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
     });
 

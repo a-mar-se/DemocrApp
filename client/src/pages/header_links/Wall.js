@@ -1,10 +1,10 @@
 import React from 'react';
 import ShowAllPolls from '../../components/sections/ShowAllPolls.js';
 
-const Wall = ({ user }) => {
+const Wall = ({ name, id, email, token }) => {
   return (
     <main className="page">
-      <ShowAllPolls user={user} />
+      <ShowAllPolls token={token} name={name} email={email} id={id} />
     </main>
   );
 };

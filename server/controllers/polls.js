@@ -19,8 +19,7 @@ export const createNewPoll = async (request, response) => {
     console.log(newData);
     return response.status(200).send(newData);
   } catch (error) {
-    // console.log(response);
-    return response.status(500).send({
+    return response.status(250).send({
       message: `Error: not connection to database, ${error}.`,
     });
   }
@@ -42,6 +41,7 @@ export const createNewComment = async (request, response) => {
 export const listAllPolls = async (request, response, next) => {
   try {
     const data = await getAllPolls();
+    console.log(data);
     return response.status(200).send(data);
   } catch (error) {
     return response.status(500).send({
