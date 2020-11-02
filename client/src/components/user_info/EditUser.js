@@ -11,6 +11,9 @@ const EditUser = ({ token, email }) => {
     const response = await fetch(`/user/${id}`, {});
     const personData = await response.json();
     setPerson(personData);
+    setNewEmail(person.email);
+    setNewName(person.name);
+    setNewPassword(person.password);
   };
 
   const [newName, setNewName] = useState('');

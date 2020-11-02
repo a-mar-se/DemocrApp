@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Auth from '../auth.js';
 const EditPoll = ({ token, email, name }) => {
   const { id } = useParams();
 

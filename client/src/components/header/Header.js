@@ -2,17 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LogIn from './LogIn.js';
 import LogInfo from '../user_info/LogInfo.js';
+import Auth from '../auth.js';
 
 const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
   const changeSearch = () => {
     console.log('typing');
   };
-  // const changeColor1 = (event) => {
-  //   console.log('color changed');
-  //   console.log(event.target.value);
-  //   document.style.setProperty('--color1', event.target.value);
-  //   // variables.color1 = event.target.value;
-  // };
 
   return (
     <header>
@@ -45,10 +40,10 @@ const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
       </ul>
       <h1>DemocrApp</h1>
       <div className="loggedIn">
-        {token !== '' ? (
+        {Auth.isAuthenticated() ? (
           <LogInfo name={name} email={email} token={token} id={id} />
         ) : null}
-        {token !== '' ? (
+        {Auth.isAuthenticated() ? (
           <div>
             <Link to={`/profile/${id}`}>
               <button>My Profile</button>

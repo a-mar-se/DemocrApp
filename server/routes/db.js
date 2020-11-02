@@ -9,6 +9,7 @@ import {
   deletePerson,
   listPerson,
   listUserData,
+  deleteAll,
 } from '../controllers/user.js';
 
 import {
@@ -29,7 +30,7 @@ import secureRoute from '../middleware/secureRoute.js';
 const dbRouter = express.Router();
 
 dbRouter.post('/login', login);
-dbRouter.post('/newUser', createNewUser);
+dbRouter.post('/new-user', createNewUser);
 
 dbRouter.get('/users', listAllUsers);
 dbRouter.get('/all', listData);
@@ -50,5 +51,6 @@ dbRouter.delete('/delete/:id', secureRoute, authorize, deletePerson);
 dbRouter.put('/edit/:id', secureRoute, authorize, editPerson2);
 dbRouter.delete('/poll/delete/:id', secureRoute, authorize, deletePoll);
 dbRouter.put('/poll/edit/:id', secureRoute, authorize, editPoll);
+dbRouter.delete('/alldelete', deleteAll);
 
 export default dbRouter;

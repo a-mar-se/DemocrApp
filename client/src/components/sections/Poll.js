@@ -9,12 +9,16 @@ const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
   const [newComment, setNewComment] = useState('');
   const [comments, setComments] = useState([]);
 
-  const start = async (idd) => {
-    const newData = await findCommentsById(idd);
+  const start = async () => {
+    const newData = await findCommentsById(poll._id);
     setComments(newData);
   };
   useEffect(() => {
-    start(poll._id);
+    const startComments = async () => {
+      const newData = await findCommentsById(poll._id);
+      setComments(newData);
+    };
+    startComments();
   }, []);
 
   const handleReactToPoll = async () => {

@@ -1,5 +1,6 @@
 // import { response } from 'express';
 import mongoose from 'mongoose';
+import { Content } from './polls.js';
 
 const userSchema = new mongoose.Schema(
   {
@@ -18,7 +19,6 @@ export const User = mongoose.model('User', userSchema);
 
 export const createUserResource = async (data) => {
   try {
-    console.log(data);
     return await User.create({ ...data });
   } catch (error) {
     throw new Error(error);
@@ -53,6 +53,25 @@ export const sendDeletePetition = async (id) => {
       return 'user deleted';
     } else {
       return 'user doesn´t exist';
+    }
+  } catch (error) {
+    throw new Error(error);
+    // return 'kifj';
+  }
+};
+
+export const sendDeletePetitionAll = async (id) => {
+  try {
+    const returnValUsers = await User.remove();
+    const returnValPolls = await Content.remove();
+    if (returnValUsers) {
+      if (returnValPolls) {
+        return 'users and polls deleted';
+      } else {
+        return 'Users deleted. Polls not deleted';
+      }
+    } else {
+      return 'Can´t find users';
     }
   } catch (error) {
     throw new Error(error);

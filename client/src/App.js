@@ -14,7 +14,7 @@ import Wall from './pages/header_links/Wall.js';
 import Auth from './components/auth.js';
 
 const App = () => {
-  const [token, setToken] = useState(Auth.getToken());
+  const [token, setToken] = useState('');
   const [email, setNewEmail] = useState();
   const [name, setNewName] = useState();
   const [id, setNewId] = useState();
@@ -45,19 +45,23 @@ const App = () => {
   };
 
   const checkIfLogged = async () => {
-    const fetchUser = async () => {
-      const response = await fetch(`/user-data`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const personData = await response.json();
-      return personData;
-    };
-    const activeUser = await fetchUser();
-    setNewId(activeUser._id);
-    console.log(id);
-    setNewEmail(activeUser.email);
-    setNewName(activeUser.name);
+    if (Auth.isAuthenticated()) {
+      const fetchUser = async () => {
+        const response = await fetch(`/user-data`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${Auth.getToken()}` },
+        });
+        const personData = await response.json();
+        return personData;
+      };
+      const activeUser = await fetchUser();
+      if (activeUser.status === 200) {
+        setNewId(activeUser._id);
+        console.log(id);
+        setNewEmail(activeUser.email);
+        setNewName(activeUser.name);
+      }
+    }
   };
 
   useEffect(() => {
@@ -68,7 +72,6 @@ const App = () => {
     <div className="app">
       <BrowserRouter>
         <Header
-          token={token}
           id={id}
           handleLogIn={handleLogIn}
           logOut={logOut}
@@ -79,29 +82,22 @@ const App = () => {
           <Route
             exact
             path="/"
-            render={() => (
-              <Home email={email} name={name} token={token} id={id} />
-            )}
+            render={() => <Home email={email} name={name} id={id} />}
           />
           <Route path="/users" component={GetAllUsers} />
-          <Route path="/user/:id" render={() => <ShowPerson token={token} />} />
+          <Route path="/user/:id" render={() => <ShowPerson />} />
           <Route
             path="/profile/:id"
-            render={() => <ShowProfile token={token} email={email} />}
+            render={() => <ShowProfile email={email} />}
           />
-          <Route
-            path="/edit/:id"
-            render={() => <EditUser token={token} email={email} />}
-          />{' '}
+          <Route path="/edit/:id" render={() => <EditUser email={email} />} />{' '}
           <Route
             path="/poll/edit/:id"
-            render={() => <EditPoll token={token} email={email} name={name} />}
+            render={() => <EditPoll email={email} name={name} />}
           />
           <Route
             path="/wall"
-            render={() => (
-              <Wall token={token} name={name} email={email} id={id} />
-            )}
+            render={() => <Wall name={name} email={email} id={id} />}
           />
           <Route path="/*" component={Error} />
         </Switch>

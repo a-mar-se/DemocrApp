@@ -16,6 +16,7 @@ const ShowAllPolls = ({ name, id, email, token }) => {
 
   return (
     <div className="allpolls">
+      <NewPoll />
       {polls.map((poll, i) => {
         return (
           <Poll

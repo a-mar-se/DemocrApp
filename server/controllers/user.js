@@ -4,7 +4,12 @@ import {
   updatePerson,
 } from '../models/user.js';
 import jwt from 'jsonwebtoken';
-import { User, sendDeletePetition, getUserById } from '../models/user.js';
+import {
+  User,
+  sendDeletePetition,
+  sendDeletePetitionAll,
+  getUserById,
+} from '../models/user.js';
 import logger from '../lib/logger.js';
 
 export const createNewUser = async (request, response) => {
@@ -144,7 +149,8 @@ export const listUserData = async (req, res, next) => {
   new Promise((resolve, reject) => {
     const secret = 'something really secret';
     jwt.verify(token, secret, (err, payload) => {
-      if (err) return reject(err);
+      if (err)
+        return res.status(420).json({ message: 'The user is not logged in' });
       return resolve(payload);
     });
   })
@@ -159,4 +165,19 @@ export const listUserData = async (req, res, next) => {
       return res.status(200).send(user);
     })
     .catch(next);
+};
+
+export const deleteAll = async (request, response, next) => {
+  try {
+    const dataResource = await sendDeletePetitionAll();
+    if (dataResource) {
+      return await response.status(200).send(dataResource);
+    } else {
+      return await response.status(404).send({
+        message: 'Error: Profile not found.',
+      });
+    }
+  } catch (err) {
+    return await response.send(err);
+  }
 };
