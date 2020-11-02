@@ -4,8 +4,12 @@ import jwt from 'jsonwebtoken';
 import { User } from '../models/user.js';
 
 function secureRoute(req, res, next) {
+  console.log(req.headers);
+  console.log(req.headers.authorization);
   if (!req.headers.authorization)
-    return res.status(401).json({ message: 'Unauthorized' });
+    return res.status(412).json({
+      message: 'There isn´t authorization token on the headers request',
+    });
   const token = req.headers.authorization.replace('Bearer ', '');
   // console.log(token);
   new Promise((resolve, reject) => {
@@ -17,7 +21,7 @@ function secureRoute(req, res, next) {
   })
     .then((payload) => User.findById(payload.sub)) // find the user by the user ID in the payload
     .then((user) => {
-      if (!user) return res.status(401).json({ message: 'dd' });
+      if (!user) return res.status(401).json({ message: 'User authorized' });
       req.currentUser = user;
       next();
     })

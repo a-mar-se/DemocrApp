@@ -44,7 +44,8 @@ export const createCommentResource = async (data) => {
       nagainst: 0,
       typeContent: 'comment',
     });
-    console.log(psps);
+    return psps;
+    // console.log(psps);
   } catch (error) {
     throw new Error(error);
   }
@@ -68,7 +69,9 @@ export const getAllPolls = async () => {
 
 export const getComments = async (id) => {
   try {
-    return await Content.find({ typeContent: 'comment', parentId: id });
+    return await Content.find({ typeContent: 'comment', parentId: id }).sort({
+      _id: -1,
+    });
   } catch (error) {
     throw new Error(error);
   }
@@ -91,7 +94,13 @@ export const sendDeletePetitionPoll = async (id) => {
   try {
     const returnVal = await Content.findByIdAndDelete(id);
     if (returnVal) {
-      return 'Poll deleted';
+      const commentsOfPoll = await Content.remove({ parentId: id });
+      if (commentsOfPoll) {
+        console.log('Comments of the poll deleted');
+      } else {
+        console.log('There aren´t comments on this poll');
+      }
+      return 'Poll and comments deleted';
     } else {
       return 'Poll doesn´t exist';
     }

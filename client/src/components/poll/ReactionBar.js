@@ -53,7 +53,7 @@ const ReactionBar = ({
   return (
     <div className="reaction-bar">
       <button onClick={handleAgainst}>Against Poll</button>
-      <input type="range" />
+      {/* <input type="range" /> */}
       <button onClick={handleFavor}>Agree with Poll</button>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ShowComments from '../poll/ShowComments.js';
 import TimeAgo from '../poll/TimeAgo.js';
@@ -7,6 +7,16 @@ import EditBar from '../poll/EditBar.js';
 
 const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
   const [newComment, setNewComment] = useState('');
+  const [comments, setComments] = useState([]);
+
+  const start = async (idd) => {
+    const newData = await findCommentsById(idd);
+    setComments(newData);
+  };
+  useEffect(() => {
+    start(poll._id);
+  }, []);
+
   const handleReactToPoll = async () => {
     if (token !== '') {
     } else {
@@ -16,31 +26,33 @@ const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
 
   const postNewComment = async (event) => {
     event.preventDefault();
-    const response = await fetch(`/new-comment/`, {
+    console.log('new commmen');
+    console.log(token);
+    const response = await fetch(`/new-comment`, {
       method: 'POST',
       body: JSON.stringify({
         name: name,
-        authorId: poll.authorId,
-        parentId: poll.id,
+        authorId: id,
+        parentId: poll._id,
         content: newComment,
       }),
       headers: {
         'Content-Type': 'application/json',
-        Authorizarion: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
-    // console.log(response);
-
     if (response.status === 200) {
-      alert('Poll sucessfully created!');
       console.log('New comment added!');
-      // REFRESH COMMENTS
+      setNewComment('');
+      const commentBox = event.target;
+      const com = commentBox.querySelector('#newComment');
+      com.value = '';
+      start(poll._id);
+      refreshPolls();
     } else {
       console.log('Error trying to post comment');
     }
-    // const contentObject = document.getElementById('comment-content');
-    // contentObject.value = '';
   };
 
   const handleChangeComment = (event) => {
@@ -55,6 +67,13 @@ const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
       event.currentTarget.value = '';
       setNewComment('');
     }
+  };
+
+  const findCommentsById = async (idComment) => {
+    const res = await fetch(`/comments-by-id/${idComment}`);
+    const data = await res.json();
+    return data;
+    // return setNewComment(data);
   };
 
   return (
@@ -75,6 +94,7 @@ const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
       <div>
         <form className="writeComment" onSubmit={postNewComment}>
           <input
+            id="newComment"
             type="text"
             placeholder="Write comment"
             onClick={handleReactToPoll}
@@ -87,10 +107,12 @@ const Poll = ({ user, name, token, email, id, poll, refreshPolls }) => {
         poll={poll}
         name={name}
         token={token}
+        start={start}
         refreshPolls={refreshPolls}
       />
 
       <ShowComments
+        comments={comments}
         idComment={poll._id}
         username={name}
         token={token}

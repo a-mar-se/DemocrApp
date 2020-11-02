@@ -46,7 +46,7 @@ const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
       <h1>DemocrApp</h1>
       <div className="loggedIn">
         {token !== '' ? (
-          <LogInfo name={name} email={email} token={token} />
+          <LogInfo name={name} email={email} token={token} id={id} />
         ) : null}
         {token !== '' ? (
           <div>

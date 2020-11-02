@@ -15,7 +15,7 @@ import Auth from './components/auth.js';
 
 const App = () => {
   const [token, setToken] = useState(Auth.getToken());
-  const [email, setEmail] = useState();
+  const [email, setNewEmail] = useState();
   const [name, setNewName] = useState();
   const [id, setNewId] = useState();
   // const [user, setNewUser] = useState({});
@@ -25,13 +25,14 @@ const App = () => {
     setToken('');
     setNewId('');
     setNewName('');
+    setNewEmail('');
     Auth.logout();
   };
 
   const handleLogIn = async (ttoken, idd, emaill, namee, userr) => {
     setToken(ttoken);
     setNewId(idd);
-    setEmail(emaill);
+    setNewEmail(emaill);
     setNewName(namee);
 
     // setNewUser({
@@ -54,7 +55,8 @@ const App = () => {
     };
     const activeUser = await fetchUser();
     setNewId(activeUser._id);
-    setEmail(activeUser.email);
+    console.log(id);
+    setNewEmail(activeUser.email);
     setNewName(activeUser.name);
   };
 
