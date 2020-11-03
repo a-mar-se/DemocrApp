@@ -14,7 +14,7 @@ dotenv.config();
 const HOST = process.env.HOST || '127.0.0.1';
 const PORT = process.env.PORT || 5000;
 export const databaseURI =
-  process.env.ORMONGO_RS_URL || 'mongodb://localhost/mongoose-intro';
+  process.env.MONGODB_URI || 'mongodb://localhost/mongoose-intro';
 
 // Creacion del servidor
 const server = express();
