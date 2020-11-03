@@ -17,7 +17,7 @@ export const createNewUser = async (request, response) => {
   const { body } = request;
   try {
     const newData = await createUserResource(body);
-    return response.status(201).send(newData);
+    return response.status(200).send(newData);
   } catch (error) {
     return response.send({
       message: `Error: not connection to database, ${error}.`,
