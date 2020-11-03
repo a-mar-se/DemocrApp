@@ -11,11 +11,11 @@ const Home = ({ name, token, email, id }) => {
       <div className="home">
         <ShowAllPolls token={token} name={name} email={email} id={id} />
         {/* <RandomPoll name={name} token={token} email={email} id={id} /> */}
-        {!Auth.getToken() ? (
-          <NewUser />
-        ) : (
+        {/* {Auth.getToken() ? (
           <YourPolls name={name} token={token} email={email} id={id} />
-        )}
+        ) : (
+        )} */}
+        <NewUser />
       </div>
     </main>
   );
