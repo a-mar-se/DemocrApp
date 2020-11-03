@@ -8,6 +8,8 @@ import {
   getRandomPoll,
   createCommentResource,
   getComments,
+  tryLikePoll,
+  tryDislikePoll,
 } from '../models/polls.js';
 
 // import logger from '../lib/logger.js';
@@ -19,8 +21,7 @@ export const createNewPoll = async (request, response) => {
     console.log(newData);
     return response.status(200).send(newData);
   } catch (error) {
-    // console.log(response);
-    return response.status(500).send({
+    return response.status(250).send({
       message: `Error: not connection to database, ${error}.`,
     });
   }
@@ -42,6 +43,7 @@ export const createNewComment = async (request, response) => {
 export const listAllPolls = async (request, response, next) => {
   try {
     const data = await getAllPolls();
+    console.log(data);
     return response.status(200).send(data);
   } catch (error) {
     return response.status(500).send({
@@ -91,6 +93,7 @@ export const editPoll = async (request, response, next) => {
       .send('Error: Profile not found or not logged in. Cannot be edited');
   }
 };
+
 export const deletePoll = async (request, response, next) => {
   const {
     params: { id },
@@ -136,5 +139,38 @@ export const listRandomPoll = async (request, response, next) => {
     return response.status(404).send({
       message: 'Error: Profile not found.',
     });
+  }
+};
+
+export const likePoll = async (request, response, next) => {
+  const {
+    params: { id },
+    body,
+  } = request;
+
+  try {
+    const dataResource = await tryLikePoll(id, body.userId);
+
+    return response.status(200).send(dataResource);
+  } catch (err) {
+    return response
+      .status(408)
+      .send('Error: Profile not found or not logged in. Cannot be edited');
+  }
+};
+export const dislikePoll = async (request, response, next) => {
+  const {
+    params: { id },
+    body,
+  } = request;
+
+  try {
+    const dataResource = await tryDislikePoll(id, body.userId);
+
+    return response.status(200).send(dataResource);
+  } catch (err) {
+    return response
+      .status(408)
+      .send('Error: Profile not found or not logged in. Cannot be edited');
   }
 };

@@ -4,7 +4,13 @@ import {
   updatePerson,
 } from '../models/user.js';
 import jwt from 'jsonwebtoken';
-import { User, sendDeletePetition, getUserById } from '../models/user.js';
+import {
+  User,
+  sendDeletePetition,
+  sendDeletePetitionAll,
+  getUserById,
+  getElementsByKeyword,
+} from '../models/user.js';
 import logger from '../lib/logger.js';
 
 export const createNewUser = async (request, response) => {
@@ -13,7 +19,7 @@ export const createNewUser = async (request, response) => {
     const newData = await createUserResource(body);
     return response.status(201).send(newData);
   } catch (error) {
-    return response.status(500).send({
+    return response.send({
       message: `Error: not connection to database, ${error}.`,
     });
   }
@@ -39,11 +45,14 @@ export const signIn = async (request, response, next) => {
     if (request.body.password != user.password) {
       return response.status(420).send('Incorrect email or password.');
     } else {
-      const token = jwt.sign({ email: request.body.email }, 'Token', {
-        expiresIn: 60 * 60,
-      });
-      // response.setHeader('authorization');
-      // return response.status(200).send(token);
+      const payload = { sub: user._id };
+      const secret = 'something really secret';
+      const options = { expiresIn: '1hr' };
+      const token = jwt.sign(payload, secret, options);
+
+      // const token = jwt.sign({ email: request.body.email }, 'Token', {
+      //   expiresIn: 60 * 60,
+      // });
 
       response.setHeader('Token', token);
       response.status(200).json({
@@ -130,6 +139,58 @@ export const listPerson = async (request, response, next) => {
   } else {
     return response.status(404).send({
       message: 'Error: Profile not found.',
+    });
+  }
+};
+
+export const listUserData = async (req, res, next) => {
+  if (!req.headers.authorization)
+    return res.status(401).json({ message: 'Not logged in' });
+  const token = req.headers.authorization.replace('Bearer ', '');
+  new Promise((resolve, reject) => {
+    const secret = 'something really secret';
+    jwt.verify(token, secret, (err, payload) => {
+      if (err)
+        return res.status(420).json({ message: 'The user is not logged in' });
+      return resolve(payload);
+    });
+  })
+    .then((payload) => {
+      return User.findById(payload.sub);
+      // console.log(user);
+    })
+    // find the user by the user ID in the payload
+    .then((user) => {
+      if (!user) return res.status(402).json({ message: 'User doesn´t exist' });
+      req.currentUser = user;
+      return res.status(200).send(user);
+    })
+    .catch(next);
+};
+
+export const deleteAll = async (request, response, next) => {
+  try {
+    const dataResource = await sendDeletePetitionAll();
+    if (dataResource) {
+      return await response.status(200).send(dataResource);
+    } else {
+      return await response.status(404).send({
+        message: 'Error: Profile not found.',
+      });
+    }
+  } catch (err) {
+    return await response.send(err);
+  }
+};
+
+export const listElements = async (request, response, next) => {
+  const dataResource = await getElementsByKeyword(request.body.keyword);
+  console.log(dataResource);
+  if (dataResource) {
+    return response.status(200).send(dataResource);
+  } else {
+    return response.status(404).send({
+      message: 'Error: No user found with that name.',
     });
   }
 };

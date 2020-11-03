@@ -8,6 +8,9 @@ import {
   editPerson2,
   deletePerson,
   listPerson,
+  listUserData,
+  deleteAll,
+  listElements,
 } from '../controllers/user.js';
 
 import {
@@ -20,29 +23,43 @@ import {
   listComments,
   deletePoll,
   createNewComment,
+  likePoll,
+  dislikePoll,
 } from '../controllers/polls.js';
-import db from '../models/db.js';
+import login from '../middleware/login.js';
+import secureRoute from '../middleware/secureRoute.js';
+// import authorizeSelf from '../middleware/authorizeSelf.js';
 
 const dbRouter = express.Router();
 
-dbRouter.post('/newUser', createNewUser);
-dbRouter.get('/users', listAllUsers);
-dbRouter.post('/login', signIn);
-dbRouter.get('/all', listData);
-dbRouter.get('/user/:id', listPerson); // Can I delete thiso ne?
-dbRouter.put('/edit/:id', authorize, editPerson2);
-dbRouter.delete('/delete/:id', authorize, deletePerson);
-// dbRouter.post('/', createData);
+dbRouter.post('/login', login);
+dbRouter.post('/new-user', createNewUser);
 
-dbRouter.post('/new-poll', createNewPoll);
-dbRouter.post('/new-comment', createNewComment);
+dbRouter.get('/users', listAllUsers);
+dbRouter.get('/all', listData);
+dbRouter.get('/user/:id', listPerson);
+
 dbRouter.get('/polls', listAllPolls);
 dbRouter.get('/allm', listAll);
 dbRouter.get('/comments-by-id/:id', listComments);
 dbRouter.get('/poll/:id', listSinglePoll);
-// dbRouter.get('/vote/poll/:id', authorizeVote, giveVote);
 dbRouter.get('/randompoll', listRandomPoll);
-dbRouter.put('/poll/edit/:id', authorizePoll, editPoll);
-dbRouter.delete('/poll/delete/:id', deletePoll);
+
+// Post
+dbRouter.post('/find-elements', listElements);
+
+dbRouter.post('/user-data', secureRoute, listUserData);
+dbRouter.post('/new-poll', secureRoute, createNewPoll);
+dbRouter.post('/new-comment', secureRoute, createNewComment);
+dbRouter.put('/poll/like/:id', secureRoute, likePoll);
+dbRouter.put('/poll/dislike/:id', secureRoute, dislikePoll);
+
+// Update
+dbRouter.put('/edit/:id', secureRoute, authorize, editPerson2);
+dbRouter.put('/poll/edit/:id', secureRoute, authorize, editPoll);
+//Delete
+dbRouter.delete('/delete/:id', secureRoute, authorize, deletePerson);
+dbRouter.delete('/poll/delete/:id', secureRoute, authorize, deletePoll);
+dbRouter.delete('/alldelete', deleteAll);
 
 export default dbRouter;

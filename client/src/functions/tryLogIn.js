@@ -1,4 +1,14 @@
+import Auth from '../components/auth.js';
+
+// import bcrypt from 'bcryptjs';
+
 export const tryLogIn = async (newEmail, newPassword) => {
+  // console.log('tryin');
+  // const BCRYPT_SALT_ROUNDS = 12;
+  // const hashedPass = await bcrypt.compare(newPassword,hash BCRYPT_SALT_ROUNDS);
+  // console.log(hashedPass);
+  // const hashedPass1 = await bcrypt.hash(newPassword, BCRYPT_SALT_ROUNDS);
+  // console.log(hashedPass1);
   const res = await fetch(`/login`, {
     method: 'POST',
     body: JSON.stringify({
@@ -9,16 +19,15 @@ export const tryLogIn = async (newEmail, newPassword) => {
       'Content-Type': 'application/json',
     },
   });
+
+  console.log(res);
   if (res.status === 200) {
     const data = await res.json();
-    console.log(data);
     const newToken = data.token;
     const newId = data._id;
     const newName = data.name;
-    console.log(`Logged in with email: ${newEmail}`);
-    console.log(`Logged in with token: ${newToken}`);
+    Auth.setToken(newToken);
     return { newToken, newId, newEmail, newName };
-    // handleLogInGood(newToken, newId, newEmail);
   } else {
     alert('Incorrect email or password');
   }

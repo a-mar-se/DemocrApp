@@ -10,7 +10,6 @@ const ShowProfile = ({ token, email }) => {
     const response = await fetch(`/user/${id}`);
     const personData = await response.json();
     console.log(personData);
-    // const studentData = await getStudent(id);
     setPerson(personData);
   };
 
@@ -35,8 +34,6 @@ const ShowProfile = ({ token, email }) => {
 
   return (
     <main className="page show">
-      {/* dsjifsdpfds
-      {person.id} */}
       <h2>{person.name}</h2>
       <h3> {person.surname}</h3>
       <div>Id: {person._id}</div>

@@ -26,11 +26,15 @@
   .intro {
     padding: 10px;
   }
+  button {
+    background-color: $color2;
+    &:hover {
+      background-color: white;
+    }
+  }
 }
 
 .logo {
-  // height: 50px;
-  color: rgba(16, 12, 223, 0.801);
   font-weight: 900;
   font-size: 2rem;
 }

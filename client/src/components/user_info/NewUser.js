@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import bcrypt from 'bcryptjs';
+
 const NewUser = () => {
   const [newName, setNewName] = useState('');
   const [newPassword, setNewSurname] = useState('');
@@ -20,11 +22,14 @@ const NewUser = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await fetch(`/newUser`, {
+    const BCRYPT_SALT_ROUNDS = 12;
+    const hashedPass = await bcrypt.hash(newPassword, BCRYPT_SALT_ROUNDS);
+    // console.log(hashedPass);
+    const res = await fetch(`/new-user`, {
       method: 'POST',
       body: JSON.stringify({
         name: newName,
-        password: newPassword,
+        password: hashedPass,
         email: newEmail,
       }),
       headers: {
@@ -32,8 +37,23 @@ const NewUser = () => {
       },
     });
 
-    console.log('New person added!');
-    window.location.href = `/users`;
+    if (res.status === 200) {
+      setNewName('');
+      setNewSurname('');
+      setNewEmail('');
+
+      const commentBox = event.target;
+      const com = commentBox.querySelector('#name');
+      com.value = '';
+      const commm = commentBox.querySelector('#email');
+      commm.value = '';
+      const comm = commentBox.querySelector('#pass');
+      comm.value = '';
+      console.log('New person added!');
+    } else {
+      alert('Error Registering new person');
+      console.log('Error Registering new person');
+    }
   };
 
   return (
@@ -54,16 +74,6 @@ const NewUser = () => {
         />
       </p>
       <p>
-        <label htmlFor="pass">Password</label>
-        <input
-          id="pass"
-          placeholder="Enter password..."
-          type="text"
-          required
-          onChange={handleChangePass}
-        />
-      </p>
-      <p>
         <label htmlFor="email">Email</label>
         <input
           id="email"
@@ -71,6 +81,16 @@ const NewUser = () => {
           type="text"
           required
           onChange={handleChangeEmail}
+        />
+      </p>
+      <p>
+        <label htmlFor="pass">Password</label>
+        <input
+          id="pass"
+          placeholder="Enter password..."
+          type="password"
+          required
+          onChange={handleChangePass}
         />
       </p>
       <p>

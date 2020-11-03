@@ -1,43 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Auth from '../auth.js';
 
-const EditPoll = ({ token, email, name }) => {
+const EditPoll = ({ email, name }) => {
   const { id } = useParams();
-  // state = { pollData: {}}
 
   const [content, setContent] = useState('');
-  // const [pollData, setPollData] = useState('');
   const [title, setTitle] = useState('');
-
-  // const handleComment = (event) => {
-  //   event.currentTarget.value = '';
-  //   setContent('');
-  // };
 
   const postEditedPoll = async (event) => {
     event.preventDefault();
     const response = await fetch(`/poll/edit/${id}`, {
       method: 'PUT',
       body: JSON.stringify({
-        name: name,
         title: title,
         content: content,
       }),
       headers: {
         'Content-Type': 'application/json',
-        id: id,
-        email: email,
-        token: token,
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
     });
-
-    console.log(response);
 
     if (response.status === 200) {
       alert('Poll sucessfully edited!');
       console.log('Poll sucessfully edited!');
-
-      // window.location.href = '/users';
     } else {
       console.log('Error trying to edit poll');
     }
@@ -73,7 +60,7 @@ const EditPoll = ({ token, email, name }) => {
 
   return (
     <div>
-      {token !== '' ? (
+      {Auth.isAuthenticated() ? (
         <form className="poll" onSubmit={postEditedPoll}>
           <div>
             <label htmlFor="name">Edit your proposition:</label>
