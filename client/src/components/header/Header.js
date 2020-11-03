@@ -18,26 +18,23 @@ const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
 
   const searchContent = async (event) => {
     const val = event.target.value;
-    const response = await fetch(`${REACT_APP_SERVER_URL}/find-elements`, {
-      method: 'POST',
-      body: JSON.stringify({
-        keyword: val,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const data = await response.json();
-    console.log(data);
+    if (val !== '') {
+      const response = await fetch(`${REACT_APP_SERVER_URL}/find-elements`, {
+        method: 'POST',
+        body: JSON.stringify({
+          keyword: val,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data);
 
-    setSearch(data);
-    // if (data.length > 0) {
-    //   data.map((person) => {
-    //     console.log(person);
-    //     setSearch([...searchedUsers, person]);
-    //     console.log(searchedUsers);
-    //   });
-    // }
+      setSearch(data);
+    } else {
+      setSearch([]);
+    }
   };
 
   return (
@@ -69,19 +66,24 @@ const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
           />
           {searchedUsers.map((userr, i) => {
             return (
-              <Link to={`/user/${userr._id}`}>
-                <div key={i} onClick={removeSearch}>
-                  {userr.name}
-                </div>
-              </Link>
+              <div className="searchContent">
+                <Link to={`/user/${userr._id}`}>
+                  <div
+                    key={i}
+                    onClick={removeSearch}
+                    className="searched-ousiders"
+                  >
+                    {userr.name}
+                  </div>
+                </Link>
+              </div>
             );
           })}
         </li>
+        <li className="logoHeader">
+          <h1>DemocrApp</h1>
+        </li>
       </ul>
-      <li className="logoHeader">
-        <h1>DemocrApp</h1>
-      </li>
-
       <div className="loggedIn">
         {Auth.isAuthenticated() ? (
           <LogInfo name={name} email={email} token={token} id={id} />

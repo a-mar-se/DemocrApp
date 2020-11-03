@@ -1,5 +1,6 @@
 @import 'variables';
 header {
+  max-height: 8vh;
   width: 100vw;
   top: 0;
   // height: 100px;
@@ -26,7 +27,12 @@ header {
       flex-direction: column;
       justify-content: center;
       min-width: 150px;
-
+      .searchcontent {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+      }
       input {
         background-color: $color2;
         &:hover {
@@ -83,7 +89,7 @@ header {
 }
 
 .search-results {
-  position: fixed;
+  // position: fixed;
   left: 30vw;
   margin: 10px;
   display: flex;
@@ -112,4 +118,9 @@ header {
       background-color: $color1;
     }
   }
+}
+
+.searched-outsiders {
+  position: relative;
+  display: block;
 }
