@@ -24,7 +24,7 @@ const ReactionBar = ({
   };
 
   const handleReactToPoll = async () => {
-    if (token !== '') {
+    if (Auth.getToken()) {
     } else {
       alert('You need to log in to react to polls');
     }
