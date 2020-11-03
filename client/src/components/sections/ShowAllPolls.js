@@ -2,7 +2,8 @@ import React, { Component, useEffect, useState } from 'react';
 import Poll from './Poll.js';
 import NewPoll from '../poll/NewPoll.js';
 import Auth from '../auth.js';
-
+import dotenv from 'dotenv';
+dotenv.config();
 const { REACT_APP_SERVER_URL } = process.env;
 class ShowAllPolls extends React.Component {
   //  ({ name, id, email })
