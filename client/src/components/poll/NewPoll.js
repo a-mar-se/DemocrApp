@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import Auth from '../auth.js';
+
+const { REACT_APP_SERVER_URL } = process.env;
 const NewPoll = ({ name, email, id, refreshPolls }) => {
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
 
   const postNewPoll = async (event) => {
     event.preventDefault();
-    const response = await fetch(`/new-poll`, {
+    const response = await fetch(`${REACT_APP_SERVER_URL}/new-poll`, {
       method: 'POST',
       body: JSON.stringify({
         name: name,

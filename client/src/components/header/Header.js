@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import LogIn from './LogIn.js';
 import LogInfo from '../user_info/LogInfo.js';
 import Auth from '../auth.js';
+const { REACT_APP_SERVER_URL } = process.env;
 
 const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
   const [searchedUsers, setSearch] = useState([]);
@@ -17,7 +18,7 @@ const Header = ({ id, token, handleLogIn, logOut, email, name }) => {
 
   const searchContent = async (event) => {
     const val = event.target.value;
-    const response = await fetch(`/find-elements`, {
+    const response = await fetch(`${REACT_APP_SERVER_URL}/find-elements`, {
       method: 'POST',
       body: JSON.stringify({
         keyword: val,

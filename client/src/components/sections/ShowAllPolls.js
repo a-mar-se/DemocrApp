@@ -3,13 +3,14 @@ import Poll from './Poll.js';
 import NewPoll from '../poll/NewPoll.js';
 import Auth from '../auth.js';
 
+const { REACT_APP_SERVER_URL } = process.env;
 class ShowAllPolls extends React.Component {
   //  ({ name, id, email })
   state = { polls: [] };
   // const [polls, setPolls] = useState([]);
 
   refreshPolls = async () => {
-    const res = await fetch(`/polls`);
+    const res = await fetch(`${REACT_APP_SERVER_URL}/polls`);
     const data = await res.json();
     console.log(data);
     this.setState({ polls: data });

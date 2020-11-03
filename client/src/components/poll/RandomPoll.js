@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Poll from '../sections/Poll.js';
 
+const { REACT_APP_SERVER_URL } = process.env;
 const RandomPoll = ({ name, token, email, id }) => {
   const [poll, setPoll] = useState([]);
 
@@ -16,7 +17,7 @@ const RandomPoll = ({ name, token, email, id }) => {
 
   useEffect(() => {
     const start = async () => {
-      const res = await fetch(`/randompoll`);
+      const res = await fetch(`${REACT_APP_SERVER_URL}/randompoll`);
       const data = await res.json();
       return setPoll(data);
     };

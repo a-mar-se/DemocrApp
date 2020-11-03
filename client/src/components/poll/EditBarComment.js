@@ -1,6 +1,7 @@
 import React from 'react';
 import Auth from '../auth.js';
 
+const { REACT_APP_SERVER_URL } = process.env;
 const EditBarComment = ({
   editting,
   name,
@@ -12,13 +13,16 @@ const EditBarComment = ({
 }) => {
   const handleDelete = async () => {
     window.confirm('Are you sure you want to delete this poll?');
-    const res = await fetch(`/poll/delete/${comment._id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${Auth.getToken()}`,
+    const res = await fetch(
+      `${REACT_APP_SERVER_URL}/poll/delete/${comment._id}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
       },
-    });
+    );
     if (res.status === 200) {
       refreshComments();
       console.log('Comment sucessfully deleted');

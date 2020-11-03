@@ -12,6 +12,7 @@ import GetAllUsers from './pages/header_links/GetAllUsers.js';
 import ShowProfile from './pages/header_links/ShowProfile.js';
 import Wall from './pages/header_links/Wall.js';
 import Auth from './components/auth.js';
+const { REACT_APP_SERVER_URL } = process.env;
 
 const App = () => {
   const [email, setNewEmail] = useState();
@@ -35,7 +36,7 @@ const App = () => {
   const checkIfLogged = async () => {
     if (Auth.isAuthenticated()) {
       const fetchUser = async () => {
-        const response = await fetch(`/user-data`, {
+        const response = await fetch(`${REACT_APP_SERVER_URL}/user-data`, {
           method: 'POST',
           headers: { Authorization: `Bearer ${Auth.getToken()}` },
         });

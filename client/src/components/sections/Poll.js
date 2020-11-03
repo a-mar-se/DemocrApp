@@ -7,6 +7,7 @@ import ReactionBar from '../poll/ReactionBar.js';
 import EditBar from '../poll/EditBar.js';
 import Auth from '../auth.js';
 
+const { REACT_APP_SERVER_URL } = process.env;
 class Poll extends React.Component {
   state = {
     newComment: '',
@@ -16,7 +17,9 @@ class Poll extends React.Component {
   //  ({ name, email, id, poll, refreshPolls })
 
   refreshComments = async () => {
-    const res = await fetch(`/comments-by-id/${this.props.poll._id}`);
+    const res = await fetch(
+      `${REACT_APP_SERVER_URL}/comments-by-id/${this.props.poll._id}`,
+    );
     const data = await res.json();
     this.setState({ comments: data });
   };
@@ -35,7 +38,7 @@ class Poll extends React.Component {
   postNewComment = async (event) => {
     event.preventDefault();
     // console.log(this.state.comments);
-    const response = await fetch(`/new-comment`, {
+    const response = await fetch(`${REACT_APP_SERVER_URL}/new-comment`, {
       method: 'POST',
       body: JSON.stringify({
         name: this.props.name,

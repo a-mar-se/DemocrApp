@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Auth from '../auth.js';
 
+const { REACT_APP_SERVER_URL } = process.env;
 const EditPoll = ({ email, name }) => {
   const { id } = useParams();
 
@@ -10,7 +11,7 @@ const EditPoll = ({ email, name }) => {
 
   const postEditedPoll = async (event) => {
     event.preventDefault();
-    const response = await fetch(`/poll/edit/${id}`, {
+    const response = await fetch(`${REACT_APP_SERVER_URL}/poll/edit/${id}`, {
       method: 'PUT',
       body: JSON.stringify({
         title: title,
@@ -39,7 +40,7 @@ const EditPoll = ({ email, name }) => {
     setTitle(value);
   };
   const catchPoll = async () => {
-    const res = await fetch(`/poll/${id}`);
+    const res = await fetch(`${REACT_APP_SERVER_URL}/poll/${id}`);
     const data = await res.json();
     return data;
   };

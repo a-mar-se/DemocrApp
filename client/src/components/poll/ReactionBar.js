@@ -1,4 +1,6 @@
 import Auth from '../auth.js';
+
+const { REACT_APP_SERVER_URL } = process.env;
 const ReactionBar = ({
   parentId,
   userId,
@@ -31,7 +33,7 @@ const ReactionBar = ({
   const dislikePoll = async (event) => {
     event.preventDefault();
 
-    const response = await fetch(`/poll/dislike/${id}`, {
+    const response = await fetch(`${REACT_APP_SERVER_URL}/poll/dislike/${id}`, {
       method: 'PUT',
       body: JSON.stringify({
         userId: userId,
@@ -53,7 +55,7 @@ const ReactionBar = ({
   const likePoll = async (event) => {
     event.preventDefault();
 
-    const response = await fetch(`/poll/like/${id}`, {
+    const response = await fetch(`${REACT_APP_SERVER_URL}/poll/like/${id}`, {
       method: 'PUT',
       body: JSON.stringify({
         userId: userId,
