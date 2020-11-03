@@ -18,12 +18,12 @@ export const databaseURI =
 
 // Creacion del servidor
 const server = express();
-server.use(cors());
 mongoose.connect(databaseURI, {
   useFindAndModify: false,
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+server.use(cors());
 
 // El servidor utilizará como deserializador de data bodyparser y deserializara en JSON
 server.use(bodyParser.json());
