@@ -10,6 +10,9 @@
     "server",
     "client"
   ],
+  "scripts": {
+    "start": "yarn workspace server start"
+  },
   "private": true,
   "dependencies": {
     "jsonwebtoken": "^8.5.1"
