@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import bcrypt from 'bcryptjs';
 
+const { REACT_APP_SERVER_URL } = process.env;
 const NewUser = () => {
   const [newName, setNewName] = useState('');
   const [newPassword, setNewSurname] = useState('');
@@ -25,7 +26,7 @@ const NewUser = () => {
     const BCRYPT_SALT_ROUNDS = 12;
     const hashedPass = await bcrypt.hash(newPassword, BCRYPT_SALT_ROUNDS);
     // console.log(hashedPass);
-    const res = await fetch(`/new-user`, {
+    const res = await fetch(`${REACT_APP_SERVER_URL}/new-user`, {
       method: 'POST',
       body: JSON.stringify({
         name: newName,

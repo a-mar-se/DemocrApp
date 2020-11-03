@@ -1,5 +1,6 @@
 import Auth from '../components/auth.js';
 
+const { REACT_APP_SERVER_URL } = process.env;
 // import bcrypt from 'bcryptjs';
 
 export const tryLogIn = async (newEmail, newPassword) => {
@@ -9,7 +10,7 @@ export const tryLogIn = async (newEmail, newPassword) => {
   // console.log(hashedPass);
   // const hashedPass1 = await bcrypt.hash(newPassword, BCRYPT_SALT_ROUNDS);
   // console.log(hashedPass1);
-  const res = await fetch(`/login`, {
+  const res = await fetch(`${REACT_APP_SERVER_URL}/login`, {
     method: 'POST',
     body: JSON.stringify({
       password: newPassword,

@@ -4,6 +4,8 @@ import TimeAgo from './TimeAgo.js';
 import EditBarComment from './EditBarComment.js';
 import Auth from '../auth.js';
 
+const { REACT_APP_SERVER_URL } = process.env;
+
 const Comment = ({ comment, name, start, refreshComments }) => {
   const [editting, setEditting] = useState(false);
 
@@ -14,16 +16,19 @@ const Comment = ({ comment, name, start, refreshComments }) => {
 
   const postEditedPoll = async (event) => {
     event.preventDefault();
-    const response = await fetch(`/poll/edit/${comment._id}`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        content: content,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${Auth.getToken()}`,
+    const response = await fetch(
+      `${REACT_APP_SERVER_URL}/poll/edit/${comment._id}`,
+      {
+        method: 'PUT',
+        body: JSON.stringify({
+          content: content,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
       },
-    });
+    );
     console.log(response);
     if (response.status === 200) {
       bringCommentToEdit(false);

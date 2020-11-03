@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../auth.js';
+
+const { REACT_APP_SERVER_URL } = process.env;
 const EditBar = ({ token, email, name, poll, start, refreshPolls }) => {
   const handleDelete = async () => {
     window.confirm('Are you sure you want to delete this poll?');
-    const res = await fetch(`/poll/delete/${poll._id}`, {
+    const res = await fetch(`${REACT_APP_SERVER_URL}/poll/delete/${poll._id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Auth from '../auth.js';
 
+const { REACT_APP_SERVER_URL } = process.env;
 const EditUser = ({ token, email }) => {
   const { id } = useParams();
 
   const [person, setPerson] = useState({});
 
   const fetchStudent = async (id) => {
-    const response = await fetch(`/user/${id}`, {});
+    const response = await fetch(`${REACT_APP_SERVER_URL}/user/${id}`, {});
     const personData = await response.json();
     setPerson(personData);
     setNewEmail(person.email);
@@ -41,7 +42,7 @@ const EditUser = ({ token, email }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch(`/edit/${id}`, {
+    const response = await fetch(`${REACT_APP_SERVER_URL}/edit/${id}`, {
       method: 'PUT',
 
       body: JSON.stringify({
