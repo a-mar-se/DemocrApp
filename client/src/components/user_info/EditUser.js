@@ -49,7 +49,7 @@ const EditUser = ({ token, email, activeUser }) => {
         name: newName,
         email: newEmail,
         password: newPassword,
-        id: userId,
+        // id: userId,
         user: activeUser,
       }),
       headers: {
