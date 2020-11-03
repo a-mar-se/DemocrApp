@@ -22,10 +22,20 @@ export const User = mongoose.model('User', userSchema);
 export const createUserResource = async (data) => {
   try {
     const isThereData = await User.find({ name: data.name });
-    // console.log(isThereData);
-    if (isThereData !== []) return await User.create({ ...data });
-    else {
-      return 'Username already in use';
+    if (isThereData !== []) {
+      const isThereEmail = await User.find({ email: data.email });
+      if (isThereEmail !== []) {
+        return await User.create({ ...data });
+      } else {
+        return response.status(321).send({
+          message: `Email in use.`,
+        });
+      }
+    } else {
+      return response.status(322).send({
+        message: `Username in use.`,
+      });
+      // return 'Username already in use';
     }
   } catch (error) {
     throw new Error(error);

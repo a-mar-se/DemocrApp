@@ -60,6 +60,6 @@ dbRouter.put('/poll/edit/:id', secureRoute, authorize, editPoll);
 //Delete
 dbRouter.delete('/delete/:id', secureRoute, authorize, deletePerson);
 dbRouter.delete('/poll/delete/:id', secureRoute, authorize, deletePoll);
-dbRouter.delete('/alldelete', deleteAll);
+// dbRouter.delete('/alldelete', deleteAll);
 
 export default dbRouter;

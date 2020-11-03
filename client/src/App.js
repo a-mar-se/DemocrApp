@@ -81,7 +81,10 @@ const App = () => {
             path="/profile/:id"
             render={() => <ShowProfile email={email} />}
           />
-          <Route path="/edit/:id" render={() => <EditUser email={email} />} />{' '}
+          <Route
+            path="/edit/:id"
+            render={() => <EditUser email={email} activeUser={name} />}
+          />{' '}
           <Route
             path="/poll/edit/:id"
             render={() => <EditPoll email={email} name={name} />}
