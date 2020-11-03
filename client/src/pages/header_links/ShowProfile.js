@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+const { REACT_APP_SERVER_URL } = process.env;
 
 const ShowProfile = ({ token, email }) => {
   const { id } = useParams();
@@ -14,7 +15,7 @@ const ShowProfile = ({ token, email }) => {
   };
 
   const deleteThisUser = async (id) => {
-    await fetch(`/delete/${id}`, {
+    await fetch(`${REACT_APP_SERVER_URL}/delete/${id}`, {
       method: 'DELETE',
       body: JSON.stringify({ id }),
       headers: {

@@ -1,7 +1,8 @@
 const users = [
   {
-    name: 'Redemption song',
-    email: 'Bob Marley',
+    name: 'ale',
+    email: 'ale',
+    password: 'ale',
   },
 ];
 

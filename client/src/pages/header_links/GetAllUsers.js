@@ -1,6 +1,7 @@
 import React from 'react';
 import Person from '../../components/user_info/Person.js';
 
+const { REACT_APP_SERVER_URL } = process.env;
 // const url = 'http://localhost:5000/all';
 class GetAllUsers extends React.Component {
   // Get resources
@@ -9,7 +10,7 @@ class GetAllUsers extends React.Component {
     data: [],
   };
   async componentDidMount() {
-    const res = await fetch(`/users`);
+    const res = await fetch(`${REACT_APP_SERVER_URL}/users`);
     const data = await res.json();
     this.setState({ data });
   }

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { databaseURI } from '../index.js';
-import users from './music.js';
-import User from '../models/music.js';
+import users from './first_user.js';
+import User from '../models/user.js';
 
 mongoose.connect(databaseURI, {
   useFindAndModify: false,
