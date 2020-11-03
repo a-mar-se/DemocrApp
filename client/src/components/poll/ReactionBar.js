@@ -1,3 +1,4 @@
+import Auth from '../auth.js';
 const ReactionBar = ({
   parentId,
   userId,
@@ -11,8 +12,9 @@ const ReactionBar = ({
   createdAt,
   id,
 }) => {
-  const handleAgainst = () => {
+  const handleAgainst = (event) => {
     handleReactToPoll();
+    dislikePoll(event);
   };
   const handleFavor = (event) => {
     handleReactToPoll();
@@ -26,24 +28,45 @@ const ReactionBar = ({
     }
   };
 
-  const likePoll = async (event) => {
+  const dislikePoll = async (event) => {
     event.preventDefault();
 
-    const response = await fetch(`/poll/like/${id}`, {
+    const response = await fetch(`/poll/dislike/${id}`, {
       method: 'PUT',
       body: JSON.stringify({
-        nfavor: nfavorPast + 1,
-        favor: [userId, ...favorPast],
+        userId: userId,
       }),
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
     });
 
     console.log(response);
 
     if (response.status === 200) {
-      alert('Poll sucessfully edited!');
+      console.log('Poll sucessfully edited!');
+    } else {
+      console.log('Error trying to edit poll');
+    }
+  };
+  const likePoll = async (event) => {
+    event.preventDefault();
+
+    const response = await fetch(`/poll/like/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        userId: userId,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Auth.getToken()}`,
+      },
+    });
+
+    console.log(response);
+
+    if (response.status === 200) {
       console.log('Poll sucessfully edited!');
     } else {
       console.log('Error trying to edit poll');

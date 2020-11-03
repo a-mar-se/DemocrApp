@@ -23,6 +23,8 @@ import {
   listComments,
   deletePoll,
   createNewComment,
+  likePoll,
+  dislikePoll,
 } from '../controllers/polls.js';
 import login from '../middleware/login.js';
 import secureRoute from '../middleware/secureRoute.js';
@@ -43,17 +45,21 @@ dbRouter.get('/comments-by-id/:id', listComments);
 dbRouter.get('/poll/:id', listSinglePoll);
 dbRouter.get('/randompoll', listRandomPoll);
 
+// Post
 dbRouter.post('/find-elements', listElements);
 
 dbRouter.post('/user-data', secureRoute, listUserData);
 dbRouter.post('/new-poll', secureRoute, createNewPoll);
 dbRouter.post('/new-comment', secureRoute, createNewComment);
-dbRouter.put('/poll/like/:id', secureRoute, editPoll);
+dbRouter.put('/poll/like/:id', secureRoute, likePoll);
+dbRouter.put('/poll/dislike/:id', secureRoute, dislikePoll);
 
-dbRouter.delete('/delete/:id', secureRoute, authorize, deletePerson);
+// Update
 dbRouter.put('/edit/:id', secureRoute, authorize, editPerson2);
-dbRouter.delete('/poll/delete/:id', secureRoute, authorize, deletePoll);
 dbRouter.put('/poll/edit/:id', secureRoute, authorize, editPoll);
+//Delete
+dbRouter.delete('/delete/:id', secureRoute, authorize, deletePerson);
+dbRouter.delete('/poll/delete/:id', secureRoute, authorize, deletePoll);
 dbRouter.delete('/alldelete', deleteAll);
 
 export default dbRouter;

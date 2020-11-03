@@ -8,6 +8,8 @@ import {
   getRandomPoll,
   createCommentResource,
   getComments,
+  tryLikePoll,
+  tryDislikePoll,
 } from '../models/polls.js';
 
 // import logger from '../lib/logger.js';
@@ -91,6 +93,7 @@ export const editPoll = async (request, response, next) => {
       .send('Error: Profile not found or not logged in. Cannot be edited');
   }
 };
+
 export const deletePoll = async (request, response, next) => {
   const {
     params: { id },
@@ -136,5 +139,38 @@ export const listRandomPoll = async (request, response, next) => {
     return response.status(404).send({
       message: 'Error: Profile not found.',
     });
+  }
+};
+
+export const likePoll = async (request, response, next) => {
+  const {
+    params: { id },
+    body,
+  } = request;
+
+  try {
+    const dataResource = await tryLikePoll(id, body.userId);
+
+    return response.status(200).send(dataResource);
+  } catch (err) {
+    return response
+      .status(408)
+      .send('Error: Profile not found or not logged in. Cannot be edited');
+  }
+};
+export const dislikePoll = async (request, response, next) => {
+  const {
+    params: { id },
+    body,
+  } = request;
+
+  try {
+    const dataResource = await tryDislikePoll(id, body.userId);
+
+    return response.status(200).send(dataResource);
+  } catch (err) {
+    return response
+      .status(408)
+      .send('Error: Profile not found or not logged in. Cannot be edited');
   }
 };

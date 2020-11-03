@@ -1,43 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 import ShowComments from '../poll/ShowComments.js';
 import TimeAgo from '../poll/TimeAgo.js';
 import ReactionBar from '../poll/ReactionBar.js';
 import EditBar from '../poll/EditBar.js';
 import Auth from '../auth.js';
 
-const Poll = ({ name, email, id, poll, refreshPolls }) => {
-  const [newComment, setNewComment] = useState('');
-  const [comments, setComments] = useState([]);
-
-  const start = async () => {
-    const newData = await findCommentsById(poll._id);
-    setComments(newData);
+class Poll extends React.Component {
+  state = {
+    newComment: '',
+    comments: [],
   };
-  useEffect(() => {
-    const startComments = async () => {
-      const newData = await findCommentsById(poll._id);
-      setComments(newData);
-    };
-    startComments();
-  }, []);
 
-  const handleReactToPoll = async () => {
+  //  ({ name, email, id, poll, refreshPolls })
+
+  refreshComments = async () => {
+    const res = await fetch(`/comments-by-id/${this.props.poll._id}`);
+    const data = await res.json();
+    this.setState({ comments: data });
+  };
+
+  componentDidMount() {
+    this.refreshComments();
+  }
+
+  handleReactToPoll = async () => {
     if (Auth.isAuthenticated()) {
     } else {
       alert('You need to log in to react to polls');
     }
   };
 
-  const postNewComment = async (event) => {
+  postNewComment = async (event) => {
     event.preventDefault();
+    // console.log(this.state.comments);
     const response = await fetch(`/new-comment`, {
       method: 'POST',
       body: JSON.stringify({
-        name: name,
-        authorId: id,
-        parentId: poll._id,
-        content: newComment,
+        name: this.props.name,
+        authorId: this.props.id,
+        parentId: this.props.poll._id,
+        content: this.state.newComment,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -47,79 +51,84 @@ const Poll = ({ name, email, id, poll, refreshPolls }) => {
 
     if (response.status === 200) {
       console.log('New comment added!');
-      setNewComment('');
+      // setNewComment('');
+      this.setState({ newComment: '' });
       const commentBox = event.target;
       const com = commentBox.querySelector('#newComment');
       com.value = '';
-      start(poll._id);
-      refreshPolls();
+      await this.refreshComments();
     } else {
       console.log('Error trying to post comment');
     }
   };
 
-  const handleChangeComment = (event) => {
+  handleChangeComment = (event) => {
     const { value } = event.currentTarget;
-    setNewComment(value);
+
+    this.setState({ newComment: value });
+    // setNewComment(value);
   };
 
-  const handleComment = (event) => {
-    if (Auth.isAuthenticated() !== '') {
-      handleChangeComment(event);
+  handleComment = (event) => {
+    if (Auth.isAuthenticated()) {
+      this.handleChangeComment(event);
     } else {
       event.currentTarget.value = '';
-      setNewComment('');
+      this.setState({ newComment: '' });
     }
   };
 
-  const findCommentsById = async (idComment) => {
-    const res = await fetch(`/comments-by-id/${idComment}`);
-    const data = await res.json();
-    return data;
-    // return setNewComment(data);
-  };
-
-  return (
-    <div className="poll">
-      <div>"{poll.title}"</div>
-      <div className="titlePoll poll-section ">
-        <div>
-          <Link to={`/user/${poll.authorId}`}> {poll.name}</Link>{' '}
+  render() {
+    return (
+      <div className="poll">
+        <div>"{this.props.poll.title}"</div>
+        <div className="titlePoll poll-section ">
+          <div>
+            <Link to={`/user/${this.props.poll.authorId}`}>
+              {' '}
+              {this.props.poll.name}
+            </Link>{' '}
+          </div>
+          <div>👎 {this.props.poll.nagainst}</div>
+          <div>👍 {this.props.poll.nfavor}</div>
+          <TimeAgo createdAt={this.props.poll.createdAt} />
         </div>
-        <div>👎 {poll.nagainst}</div>
-        <div>👍 {poll.nfavor}</div>
-        <TimeAgo createdAt={poll.createdAt} />
+        <div className="pollcontent"> {this.props.poll.content}</div>
+
+        <ReactionBar
+          poll={this.props.poll}
+          id={this.props.poll._id}
+          userId={this.props.id}
+        />
+
+        <div>
+          <form className="writeComment" onSubmit={this.postNewComment}>
+            <input
+              id="newComment"
+              type="text"
+              placeholder="Write comment"
+              value={this.state.newComment}
+              onClick={this.handleReactToPoll}
+              onChange={this.handleComment}
+            />
+            <button type="submit">Comment</button>
+          </form>
+        </div>
+        <EditBar
+          poll={this.props.poll}
+          name={this.props.name}
+          refreshPolls={this.props.refreshPolls}
+        />
+
+        <ShowComments
+          refreshComments={this.refreshComments}
+          comments={this.state.comments}
+          idPoll={this.props.poll._id}
+          name={this.props.name}
+          email={this.props.email}
+        />
       </div>
-      <div className="pollcontent"> {poll.content}</div>
-
-      <ReactionBar poll={poll} />
-
-      <div>
-        <form className="writeComment" onSubmit={postNewComment}>
-          <input
-            id="newComment"
-            type="text"
-            placeholder="Write comment"
-            onClick={handleReactToPoll}
-            onChange={handleComment}
-          />
-          <button type="submit">Comment</button>
-        </form>
-      </div>
-      <EditBar
-        poll={poll}
-        name={name}
-        start={start}
-        refreshPolls={refreshPolls}
-      />
-
-      <ShowComments
-        comments={comments}
-        idComment={poll._id}
-        username={name}
-        email={email}
-      />
-    </div>
-  );
-};
+    );
+  }
+}
 export default Poll;

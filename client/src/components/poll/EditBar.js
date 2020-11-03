@@ -12,8 +12,6 @@ const EditBar = ({ token, email, name, poll, start, refreshPolls }) => {
       },
     });
     if (res.status === 200) {
-      start();
-
       refreshPolls();
       console.log('Poll sucessfully deleted');
     } else {

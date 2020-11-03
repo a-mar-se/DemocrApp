@@ -1,39 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import Poll from './Poll.js';
 import NewPoll from '../poll/NewPoll.js';
 import Auth from '../auth.js';
 
-const ShowAllPolls = ({ name, id, email }) => {
-  const [polls, setPolls] = useState([]);
+class ShowAllPolls extends React.Component {
+  //  ({ name, id, email })
+  state = { polls: [] };
+  // const [polls, setPolls] = useState([]);
 
-  const refreshPolls = async () => {
+  refreshPolls = async () => {
     const res = await fetch(`/polls`);
     const data = await res.json();
-    setPolls(data);
+    console.log(data);
+    this.setState({ polls: data });
   };
-  useEffect(() => {
-    refreshPolls();
-  }, []);
 
-  return (
-    <div className="allpolls">
-      {Auth.isAuthenticated() ? (
-        <NewPoll id={id} name={name} refreshPolls={refreshPolls} />
-      ) : null}
-      {polls.map((poll, i) => {
-        return (
-          <Poll
-            name={name}
-            email={email}
-            id={id}
-            poll={poll}
-            key={i}
-            refreshPolls={refreshPolls}
+  componentDidMount() {
+    this.refreshPolls();
+  }
+
+  render() {
+    return (
+      <div className="allpolls">
+        {Auth.isAuthenticated() ? (
+          <NewPoll
+            id={this.props.id}
+            name={this.props.name}
+            refreshPolls={this.refreshPolls}
           />
-        );
-      })}
-    </div>
-  );
-};
+        ) : null}
+        {this.state.polls.map((poll, i) => {
+          return (
+            <Poll
+              name={this.props.name}
+              email={this.props.email}
+              id={this.props.id}
+              poll={poll}
+              key={i}
+              refreshPolls={this.refreshPolls}
+            />
+          );
+        })}
+      </div>
+    );
+  }
+}
 
 export default ShowAllPolls;

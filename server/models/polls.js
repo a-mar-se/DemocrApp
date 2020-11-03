@@ -132,3 +132,111 @@ export const getRandomPoll = async () => {
     throw new Error(error);
   }
 };
+
+// export const tryLikePoll = async (id) => {
+//   try {
+//     console.log(id);
+//     const poll = await Content.findById(id);
+//     console.log(poll);
+//     // await Content.findByIdAndUpdate(id, { ...newData });
+//     // const updatedPoll = await Content.findById(id);
+//     // console.log(updatedPoll);
+//     // return updatedPoll;
+//   } catch (error) {
+//     throw new Error(error);
+//   }
+// };
+
+export const tryDislikePoll = async (id, userId) => {
+  try {
+    console.log(id);
+    const poll = await Content.findById(id);
+    console.log(poll);
+    console.log(poll.against.includes(userId));
+    if (poll.against.includes(userId)) {
+      const position = poll.against.indexOf(userId);
+      const newNagainst = poll.nagainst - 1;
+      // const newNagainst = 0;
+      const newAgainst = [
+        ...poll.against.splice(0, position),
+        ...poll.against.splice(position + 1),
+      ];
+      console.log(newAgainst);
+      const updatedPoll = await Content.findByIdAndUpdate(id, {
+        nagainst: newNagainst,
+        against: newAgainst,
+      });
+      console.log('already disliked');
+    } else {
+      if (poll.favor.includes(userId)) {
+        const position = poll.favor.indexOf(userId);
+        const updatedPoll = await Content.findByIdAndUpdate(id, {
+          favor: [
+            ...poll.favor.splice(0, position),
+            ...poll.favor.splice(position + 1),
+          ],
+          nfavor: poll.nfavor - 1,
+        });
+      }
+      const newNagainst = poll.nagainst + 1;
+
+      // const newNagainst = 0;
+      const newagainst = [...poll.against, userId];
+      console.log(newagainst);
+      const updatedPoll = await Content.findByIdAndUpdate(id, {
+        nagainst: newNagainst,
+        against: newagainst,
+      });
+      console.log('not disliked');
+    }
+    return await Content.findById(id);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const tryLikePoll = async (id, userId) => {
+  try {
+    console.log(id);
+    const poll = await Content.findById(id);
+    console.log(poll);
+    console.log(poll.favor.includes(userId));
+    if (poll.favor.includes(userId)) {
+      const position = poll.favor.indexOf(userId);
+      const newNfavor = poll.nfavor - 1;
+      const newfavor = [
+        ...poll.favor.splice(0, position),
+        ...poll.favor.splice(position + 1),
+      ];
+      console.log(newfavor);
+      const updatedPoll = await Content.findByIdAndUpdate(id, {
+        nfavor: newNfavor,
+        favor: newfavor,
+      });
+      console.log('already liked');
+    } else {
+      if (poll.against.includes(userId)) {
+        const position = poll.against.indexOf(userId);
+        const updatedPoll = await Content.findByIdAndUpdate(id, {
+          against: [
+            ...poll.against.splice(0, position),
+            ...poll.against.splice(position + 1),
+          ],
+          nagainst: poll.nagainst - 1,
+        });
+      }
+      const newNfavor = poll.nfavor + 1;
+      const newfavor = [...poll.favor, userId];
+      // const newfavor = [];
+      console.log(newfavor);
+      const updatedPoll = await Content.findByIdAndUpdate(id, {
+        nfavor: newNfavor,
+        favor: newfavor,
+      });
+      console.log('not liked');
+    }
+    return await Content.findById(id);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
