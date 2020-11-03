@@ -14,7 +14,7 @@
     "winston": "^3.3.3"
   },
   "scripts": {
-    "start": "yarn nodemon ./index.js"
+    "start": "node ./index.js"
   },
   "type": "module"
 }
