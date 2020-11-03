@@ -50,7 +50,7 @@ const NewUser = () => {
       commm.value = '';
       const comm = commentBox.querySelector('#pass');
       comm.value = '';
-      console.log('New person added!');
+      alert('New person added. Log in!');
     } else {
       alert('Error Registering new person');
       console.log('Error Registering new person');

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Auth from '../auth.js';
 
 const { REACT_APP_SERVER_URL } = process.env;
-const EditUser = ({ token, email }) => {
+const EditUser = ({ token, email, activeUser }) => {
   const { id } = useParams();
 
   const [person, setPerson] = useState({});
@@ -49,6 +49,8 @@ const EditUser = ({ token, email }) => {
         name: newName,
         email: newEmail,
         password: newPassword,
+        id: userId,
+        user: activeUser,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -61,6 +63,7 @@ const EditUser = ({ token, email }) => {
 
       window.location.href = '/users';
     } else {
+      alert('problem editting your profile');
       console.log('Error trying to edit the profile.');
     }
   };

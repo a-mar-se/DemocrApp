@@ -7,9 +7,9 @@ export const authorize = async (req, res, next) => {
   const {
     params: { id },
   } = req;
-  const name = await req.body.name;
+  const user = await req.body.user;
   const authorId = User.findById(id); // find the user by the user ID in the payload
-  if (authorId.name !== name)
+  if (authorId.name !== user)
     return res.status(401).json({ message: 'You can´t edit this' });
   next();
 };

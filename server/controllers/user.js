@@ -19,7 +19,7 @@ export const createNewUser = async (request, response) => {
     const newData = await createUserResource(body);
     return response.status(200).send(newData);
   } catch (error) {
-    return response.send({
+    return response.status(300).send({
       message: `Error: not connection to database, ${error}.`,
     });
   }
@@ -95,7 +95,11 @@ export const editPerson2 = async (request, response, next) => {
   logger.info(request.headers.token);
 
   try {
-    const dataResource = await updatePerson(id, body);
+    const dataResource = await updatePerson(id, {
+      name: body.name,
+      email: body.email,
+      password: body.password,
+    });
 
     return response.status(200).send(dataResource);
   } catch (err) {
