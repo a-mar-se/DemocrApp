@@ -8,7 +8,7 @@ const ShowProfile = ({ token, email }) => {
   const [person, setPerson] = useState({});
 
   const fetchStudent = async (id) => {
-    const response = await fetch(`/user/${id}`);
+    const response = await fetch(`${REACT_APP_SERVER_URL}/user/${id}`);
     const personData = await response.json();
     console.log(personData);
     setPerson(personData);
